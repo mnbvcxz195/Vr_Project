@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
         for (int i = 0; i < tarpCount; i++)
         {
             var tarpp = GameManager.GetInstance().trapList[i];
-            if (Vector3.Distance(transform.position, tarpp.transform.position) < 2f)
+            if (Vector3.Distance(transform.position, tarpp.transform.position) < .1f)
             {
                 tarpp.gameObject.SetActive(false);
             }

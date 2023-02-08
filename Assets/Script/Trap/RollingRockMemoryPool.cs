@@ -12,11 +12,12 @@ public class RollingRockMemoryPool : MonoBehaviour
         memoryPool = new MemoryPool(rockPrefab);
     }
 
-    public void SpawnRock(Vector3 position, Vector3 direction)
+    public void SpawnRock(Transform parent, Transform EndPos)
     {
-        GameObject item = memoryPool.ActivatePoolItem();
-        item.transform.position = position;
-        item.transform.rotation = Random.rotation;
-        item.GetComponent<RollingRock>().Setup(memoryPool, direction);
+        GameObject item = memoryPool.ActivatePoolItem(parent);
+
+        item.transform.position = parent.position;
+        
+        item.GetComponent<RollingRock>().Setup(memoryPool, EndPos);
     }
 }
