@@ -59,6 +59,6 @@ public class UITitle : MonoBehaviour
     
     void TitleText(string story)
     {
-        gameStory.DOText(story, 2f);
+        gameStory.DOText(story, 2f,true);
     }
 }
