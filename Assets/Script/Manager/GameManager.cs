@@ -21,14 +21,16 @@ public class GameManager : MonoBehaviour
 
     }
     #endregion
+    public List<trap> trapList = new List<trap>();
 
-    void Start()
+    public void CheckTrap()
     {
-        
-    }
+        Debug.Log("1");
 
-    void Update()
-    {
-        
+        var traps = FindObjectsOfType<trap>();
+        for (int i = 0; i < traps.Length; i++)
+        {
+            trapList.Add(traps[i]);
+        }
     }
 }
