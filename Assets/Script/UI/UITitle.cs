@@ -49,9 +49,14 @@ public class UITitle : MonoBehaviour
                 TitleText("ÇÏÁö¸¸....");
                 storyCount += 1;
                 break;
+            case 6:
+                ScenesManager.GetInstance().ChangeSceneTutorial();
+
+                break;
 
         }
     }
+    
     void TitleText(string story)
     {
         gameStory.DOText(story, 2f);

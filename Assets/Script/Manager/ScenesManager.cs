@@ -5,7 +5,11 @@ using UnityEngine.SceneManagement;
 
 public enum Scene
 {
-
+    Title,
+    Tutorial,
+    Stage1,
+    Stage2,
+    Ending,
 }
 
 public class ScenesManager : MonoBehaviour
@@ -41,4 +45,10 @@ public class ScenesManager : MonoBehaviour
     }
 
     #endregion
+    public void ChangeSceneTutorial()
+    {
+        ChangeScene(Scene.Tutorial);
+    }
+
+
 }
