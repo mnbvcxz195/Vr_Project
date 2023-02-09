@@ -31,17 +31,22 @@ public class WeaponPistol : MonoBehaviour
     private bool isReload = false;             //재장전 중인지 체크
     private bool isAttack = false;             //공격 여부 체크용
 
+    [SerializeField] private Transform endPos;  //총알 마지막 도달 위치
+
     private CasingMemoryPool casingMemoryPool; //탄피 생성 후 활성/비활성 관리
+    private BulletMemoryPool bulletMemoryPool; //총알 생성 후 활성/비활성 관리
     [SerializeField]private Camera mainCamera;                 //광선 발사
 
-/*    //외부에서 필요한 정보를 열람하기 위해 정의한 Get Property's
-    public WeaponName WeaponName => weaponSetting.weaponName;
-    public int CurrentMagazine => weaponSetting.currentMagazine;
-    public int MaxMagazine => weaponSetting.mazMagazine;*/
+    /*    //외부에서 필요한 정보를 열람하기 위해 정의한 Get Property's
+        public WeaponName WeaponName => weaponSetting.weaponName;
+        public int CurrentMagazine => weaponSetting.currentMagazine;
+        public int MaxMagazine => weaponSetting.mazMagazine;*/
+    public float AttackDistance => weaponSetting.attackDistance;
 
     private void Awake()
     {
         casingMemoryPool = GetComponent<CasingMemoryPool>();
+        bulletMemoryPool = GetComponent<BulletMemoryPool>();
         mainCamera = Camera.main;
 
         //처음 탄창 수는 최대로 설정
@@ -130,6 +135,9 @@ public class WeaponPistol : MonoBehaviour
             //공격시 currentAmno 1 감소, 탄 수 UI 업데이트
             weaponSetting.currentAmmo--;
             onAmmoEvent.Invoke(weaponSetting.currentAmmo, weaponSetting.maxAmmo);
+
+            //총알 생성
+            bulletMemoryPool.SpawnBullet(bulletSpawnPoint, endPos);
 
             //탄피 생성
             casingMemoryPool.SpawnCasing(casingSpawnPoint, transform.right);
