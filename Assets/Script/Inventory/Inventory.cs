@@ -5,12 +5,14 @@ using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
-    private bool inventoryActivated;      //인벤토리 활성화 여부
+    /// <summary> 인벤토리 활성화 여부 </summary>
+    private bool inventoryActivated;
 
-    [SerializeField]
-    private Transform slotParent;         //인벤토리 배경
-    [SerializeField]
-    private Slot[] slots;                 //아이템 슬롯
+    /// <summary> 인벤토리 오브젝트 </summary>
+    [SerializeField] private Transform slotParent;
+
+    /// <summary> 인벤토리 슬롯 </summary>
+    [SerializeField]  private Slot[] slots;
 
     private void OnValidate()
     {
@@ -32,7 +34,7 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// 인벤토리 오픈
+    /// 인벤토리 오픈 관리
     /// </summary>
     private void OpenInventory()
     {
@@ -52,6 +54,7 @@ public class Inventory : MonoBehaviour
 
     }
 
+    /// <summary> 아이템 획득 </summary>
     public void AcquireItem(ItemBase item, int _count = 1)
     {
         if (item.Type == ItemType.Ingredient || item.Type == ItemType.Consumable)
@@ -62,8 +65,8 @@ public class Inventory : MonoBehaviour
                 {
                     if (slots[i].Item.ItemName == item.ItemName)
                     {
-                        slots[i].SetItemCount(_count);
-                        return;
+                        slots[i].SetItemCount(_count); //얻은 템이 중복템일 경우 아이템 개수 +1
+                        return;                        //중복템은 슬롯에 추가 X
                     }
                 }
             }
@@ -72,7 +75,7 @@ public class Inventory : MonoBehaviour
         int num = 0;
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].Item == null)
+            if (slots[i].Item == null)                 //슬롯에 자리 남아있으면 얻은 아이템 추가
             {
                 slots[i].AddItem(item, _count);
                 return;
@@ -84,6 +87,7 @@ public class Inventory : MonoBehaviour
             Debug.Log($"꽉참");
     }
 
+    /// <summary> 아이템 사용 </summary>
     public void UseItem(int idx)
     {
         if (slots[idx].Item != null)

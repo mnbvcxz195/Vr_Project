@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scriptableItem: {fileID: 11400000, guid: fba594926d7f87f48bf4c7b88858a600, type: 2}
-  listIdx: 1
+  type: 1
   itemIdx: 0
 --- !u!1 &8499138945260610423
 GameObject:

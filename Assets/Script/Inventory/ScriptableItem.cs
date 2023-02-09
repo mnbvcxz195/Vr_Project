@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 아이템 유형
-/// </summary>
+/// <summary> 아이템 유형 </summary>
 public enum ItemType
 {
-    Weapon,           //무기 Type
-    Consumable,       //소모품 Type(포션 등)
-    Ingredient,       //재료 Type
-    ETC,              //기타 Type(제작된 아이템이나 보물 등)
+    /// <summary> 아이템 유형: 무기 </summary>
+    Weapon,
+    /// <summary> 아이템 유형: 소모품 </summary>
+    Consumable,
+    /// <summary> 아이템 유형: 재료 </summary>
+    Ingredient,
+    /// <summary> 아이템 유형: 기타 </summary>
+    ETC,
 }
 
-/// <summary>
-/// 아이템 데이터
-/// </summary>
+/// <summary> 아이템 데이터 </summary>
 [Serializable]
 public class ItemBase
 {
@@ -27,12 +27,21 @@ public class ItemBase
 
     private ItemType _ItemType;                      //아이템 유형
 
-    public int ItemIdx => itemIdx;                   //아이템 idx get
-    public string ItemName => itemName;              //아이템 이름 get
-    public Sprite ItemImage => itemImage;            //아이템 Sprite get
-    public GameObject ItemPrefab => itemPrefab;      //아이템 Prefab get
 
-    public ItemType Type                             //아이템 유형 get set
+    /// <summary> 아이템 Idx (get) </summary>
+    public int ItemIdx => itemIdx;
+
+    /// <summary> 아이템 이름 (get) </summary>
+    public string ItemName => itemName;
+
+    /// <summary> 아이템 이미지 (get) </summary>
+    public Sprite ItemImage => itemImage;
+
+    /// <summary> 아이템 프리팹 (get) </summary>
+    public GameObject ItemPrefab => itemPrefab;
+
+    /// <summary> 아이템 유형 (get) </summary>
+    public ItemType Type
     {
         get => _ItemType;
         set => _ItemType = value;
@@ -40,21 +49,27 @@ public class ItemBase
 }
 
 //프로젝트 창에서 파일 생성 가능
-//기본이름:ItemList
-//우클릭 > Create > Scriptable Object > ItemList
+//기본 파일명:ItemList
+//생성하는 법: 우클릭 > Create > Scriptable Object > ItemList
 [CreateAssetMenu(fileName = "ItemList", menuName = "Scriptable Object/ItemList")]
 public class ScriptableItem : ScriptableObject
 {
-    [SerializeField] private List<ItemBase> weaponList;      //무기 리스트
-    [SerializeField] private List<ItemBase> consumableList;  //소모품 리스트
-    [SerializeField] private List<ItemBase> ingredientList;  //재료 리스트
-    [SerializeField] private List<ItemBase> etcList;         //기타 리스트
+    /// <summary> 무기 아이템 리스트 </summary>
+    [SerializeField] private List<ItemBase> weaponList;
+    /// <summary> 소모품 아이템 리스트 </summary>
+    [SerializeField] private List<ItemBase> consumableList;
+    /// <summary> 재료 아이템 리스트 </summary>
+    [SerializeField] private List<ItemBase> ingredientList;
+    /// <summary> 기타 아이템 리스트 </summary>
+    [SerializeField] private List<ItemBase> etcList;
 
-    private List<List<ItemBase>> _itemList = null;           //아이템 리스트 묶음
+    /// <summary> 아이템 리스트 묶음 </summary>
+    private List<List<ItemBase>> _itemList = null;
 
     private int ItemListIdx;
 
-    public List<List<ItemBase>> ItemList                     //아이템 리스트 묶음 get
+    /// <summary> 아이템 리스트 묶음 (get) </summary>
+    public List<List<ItemBase>> ItemList
     {
         get
         {
@@ -65,38 +80,25 @@ public class ScriptableItem : ScriptableObject
                 SetItemTypeAndRegisterToList(consumableList, ItemType.Consumable);
                 SetItemTypeAndRegisterToList(ingredientList, ItemType.Ingredient);
                 SetItemTypeAndRegisterToList(etcList, ItemType.ETC);
-                //아이템 리스트 묶음에 (무기, 소모품, 재료, 기타 리스트 추가)
             }
             return _itemList;
         }
     }
 
-    public void SetItemList(int idx)     //아이템 리스트 Setter
+    /// <summary> 아이템 리스트 </summary>
+    public List<ItemBase> GetItemList(ItemType type)
     {
-        ItemListIdx = idx;
+        return ItemList[(int)type];
     }
 
-    public List<ItemBase> GetItemList()  //아이템 리스트 Getter
-    {
-        return ItemList[ItemListIdx];
-    }
-
-    /// <summary>
-    /// 아이템 리스트 묶음에 해당 아이템 리스트를 추가
-    /// </summary>
-    /// <param name="items"></param>
-    /// <param name="type"></param>
+    /// <summary> 아이템 리스트 묶음에 해당 아이템 리스트를 추가 </summary>
     private void SetItemTypeAndRegisterToList(List<ItemBase> items, ItemType type)
     {
         SetItemType(items, type);
         _itemList.Add(items);
     }
 
-    /// <summary>
-    /// 해당 아이템 리스트의 모든 아이템 유형을 받아온 type으로 고정
-    /// </summary>
-    /// <param name="items"></param>
-    /// <param name="type"></param>
+    /// <summary> 해당 아이템 리스트의 모든 아이템 유형을 받아온 type으로 고정 </summary>
     private void SetItemType(List<ItemBase> items, ItemType type)
     {
         for (var i = 0; i < items.Count; i++)
