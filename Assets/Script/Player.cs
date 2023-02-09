@@ -9,16 +9,29 @@ public class Player : MonoBehaviour
     public int JumpPower;
     public int MoveSpeed;
 
-    void Start()
+    [SerializeField]
+    private KeyCode keyCodeReload = KeyCode.R;                         //재장전 키
+
+
+    private WeaponPistol weapon;                 //무기를 이용한 공격 제어
+
+    private void Awake()
     {
         GameManager.GetInstance().CheckTrap();
         rigid = GetComponent<Rigidbody>();
+        weapon = GetComponentInChildren<WeaponPistol>();
+    }
+
+    void Start()
+    {
+
     }
     private void Update()
     {
         Move();
         Jump();
         ttest();
+        UpdateWeaponAction();
     }
     void Move()
     {
@@ -47,6 +60,23 @@ public class Player : MonoBehaviour
             {
                 tarpp.gameObject.SetActive(false);
             }
+        }
+    }
+
+    private void UpdateWeaponAction()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            weapon.StartWeaponAction();
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            weapon.StopWeaponAction();
+        }
+
+        if (Input.GetKeyDown(keyCodeReload))
+        {
+            weapon.StartReload();
         }
     }
 }
