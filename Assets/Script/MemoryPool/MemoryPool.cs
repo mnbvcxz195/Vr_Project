@@ -35,7 +35,7 @@ public class MemoryPool
     /// <summary>
     /// increaseCount 단위로 오브젝트를 생성
     /// </summary>
-    public void InstantiateObjects(Transform parent)
+    public void InstantiateObjects()
     {
         maxCount += increaseCount;
 
@@ -46,7 +46,6 @@ public class MemoryPool
             poolItem.isActive = false;
             poolItem.gameObject = GameObject.Instantiate(poolObject);
             poolItem.gameObject.SetActive(false);
-            poolItem.gameObject.transform.SetParent(parent);
 
             poolItemList.Add(poolItem);
         }
@@ -73,7 +72,7 @@ public class MemoryPool
     /// poolItemList에 저장되어 있는 오브젝트를 활성화해서 사용
     /// 현재 모든 오브젝트가 사용중이면 InstantiateObjects()로 추가 생성
     /// </summary>
-    public GameObject ActivatePoolItem(Transform parent)
+    public GameObject ActivatePoolItem()
     {
         if (poolItemList == null)
             return null;
@@ -82,7 +81,7 @@ public class MemoryPool
         //모든 오브젝트가 활성화 상태이면 새로운 오브젝트 필요
         if (maxCount == activeCount)
         {
-            InstantiateObjects(parent);
+            InstantiateObjects();
         }
 
         int count = poolItemList.Count;

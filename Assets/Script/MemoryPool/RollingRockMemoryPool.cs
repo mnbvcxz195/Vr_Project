@@ -14,7 +14,7 @@ public class RollingRockMemoryPool : MonoBehaviour
 
     public void SpawnRock(Transform parent, Transform EndPos)
     {
-        GameObject item = memoryPool.ActivatePoolItem(parent);
+        GameObject item = memoryPool.ActivatePoolItem();
 
         item.transform.position = parent.position;
         
