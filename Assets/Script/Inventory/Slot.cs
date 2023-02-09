@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
-    [SerializeField] private Image imgItem;
-    [SerializeField] private GameObject goCount;
-    [SerializeField] private Text txtCount;
-    public Button btnUsed;
-
-
     private ItemBase _item;                            //획득한 아이템
     private int itemCount;                             //획득한 아이템 개수
+    [SerializeField] private GameObject goItemCount;
+    [SerializeField] private Text txtItemCount;
+
+    [SerializeField] private Image imgItem;            //획득한 아이템의 이미지
+
+    public Button btnUsed;
 
     public int ItemCount                               //itemCount get set
     {
@@ -20,38 +20,43 @@ public class Slot : MonoBehaviour
         set => itemCount = value;
     }
 
-    public ItemBase Item
+    public ItemBase Item => _item;
+
+    public void AddItem(ItemBase item, int _count = 1)
     {
-        get                                             //_item get
-        { return _item; }
+        _item = item;
+        ItemCount = _count;
 
-        set                                             //_item set
+        imgItem.sprite = _item.ItemImage;
+        imgItem.color = new Color(1, 1, 1, 1);
+
+        if (_item.Type == ItemType.Ingredient || _item.Type == ItemType.Consumable)
         {
-            _item = value;
-            if (_item != null)                          //아이템의 값이 null이 아니라면
-            {                                           //아이템 이미지 가시화
-                imgItem.sprite = _item.ItemImage;
-                imgItem.color = new Color(1, 1, 1, 1);
-                //itemCount += 1;
-
-                if (_item.Type == ItemType.Weapon)
-                    goCount.SetActive(false);
-
-                else if (_item.Type == ItemType.ETC)
-                    goCount.SetActive(false);
-
-                else
-                {
-                    goCount.SetActive(true);
-                    txtCount.text = $"{itemCount}";       //아이템의 타입이 무기, 기타가 아니라면
-                }                                         //카운트 이미지 활성화
-            }
-            else
-            {                                             //아이템의 값이 null이면
-                imgItem.color = new Color(1, 1, 1, 0);    //아이템 이미지 비가시화
-                itemCount = 0;
-                goCount.SetActive(false);
-            }
+            goItemCount.SetActive(true);
+            txtItemCount.text = $"{itemCount}";
         }
+        else
+        
+        {
+            goItemCount.SetActive(false);
+        }
+    }
+
+    public void SetItemCount(int _count)
+    {
+        itemCount += _count;
+        txtItemCount.text = $"{itemCount}";
+
+        if (itemCount <= 0)
+            ClearSlot();
+    }
+
+    public void ClearSlot()
+    {
+        itemCount = 0;
+        _item = null;
+        imgItem.color = new Color(1, 1, 1, 0);
+        goItemCount.SetActive(false);
+        Debug.Log($"텅");
     }
 }

@@ -5,15 +5,13 @@ using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
-    public List<ItemBase> items;
+    //public List<ItemBase> items;          //획득한 아이템
+    private bool inventoryActivated;      //인벤토리 활성화 여부
 
     [SerializeField]
-    private Transform slotParent;
+    private Transform slotParent;         //인벤토리 배경
     [SerializeField]
-    private Slot[] slots;
-
-    private bool inventoryActivated;
-    private int itemCount;
+    private Slot[] slots;                 //아이템 슬롯
 
     private void OnValidate()
     {
@@ -22,7 +20,7 @@ public class Inventory : MonoBehaviour
 
     void Awake()
     {
-        FreshSlot();
+        //FreshSlot();
         for (int i = 0; i < slots.Length; i++)
         {
             int idx = i;
@@ -56,41 +54,44 @@ public class Inventory : MonoBehaviour
 
     }
 
-    public void FreshSlot()
+    public void AcquireItem(ItemBase item, int _count = 1)
     {
-        int i = 0;
-        for (; i < items.Count && i < slots.Length; i++)
+        if (item.Type == ItemType.Ingredient || item.Type == ItemType.Consumable)
         {
-            slots[i].Item = items[i];       //_item set 슬롯 가시화, 아이템 카운트++
+            for (int i = 0; i < slots.Length; i++)
+            {
+                if (slots[i].Item != null)
+                {
+                    if (slots[i].Item.ItemName == item.ItemName)
+                    {
+                        slots[i].SetItemCount(_count);
+                        return;
+                    }
+                }
+            }
         }
-        for (; i < slots.Length; i++)
-        {
-            slots[i].Item = null;           //_item set 슬롯 비가시화
-        }
-    }
 
-    public void AddItem(ItemBase _item)
-    {
-        if (items.Count < slots.Length)
+        int num = 0;
+        for (int i = 0; i < slots.Length; i++)
         {
-            items.Add(_item);
-            FreshSlot();
+            if (slots[i].Item == null)
+            {
+                slots[i].AddItem(item, _count);
+                return;
+            }
+            else
+                num++;
         }
-        else
-        {
-            Debug.Log($"슬롯이 가득 차 있습니다.");
-        }
+        if (slots.Length <= num)
+            Debug.Log($"꽉참");
     }
 
     public void UseItem(int idx)
     {
         if (slots[idx].Item != null)
         {
-            slots[idx].Item = null;
-            items.RemoveAt(idx);
-            Debug.Log($"아이템을 사용하였습니다.");
+            slots[idx].SetItemCount(-1);
+            Debug.Log($"아이템 사용");
         }
-        else
-            Debug.Log($"아이템이 존재하지 않습니다.");
     }
 }

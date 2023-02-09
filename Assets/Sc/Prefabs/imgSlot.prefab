@@ -291,9 +291,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81402ff06da223b4a96c107ee2ae965b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goItemCount: {fileID: 3498329822562361161}
+  txtItemCount: {fileID: 354150309291408459}
   imgItem: {fileID: 7099781899825696502}
-  goCount: {fileID: 3498329822562361161}
-  txtCount: {fileID: 354150309291408459}
   btnUsed: {fileID: 2318757702244243842}
 --- !u!114 &7099781901696659070
 MonoBehaviour:

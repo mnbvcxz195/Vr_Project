@@ -25,7 +25,7 @@ public class ObjectItem : MonoBehaviour
 
         btnTestItem.GetComponent<Image>().sprite = item.ItemImage;
 
-        btnTestItem.onClick.AddListener(() => { inventory.AddItem(item); });
+        btnTestItem.onClick.AddListener(() => { inventory.AcquireItem(item); });
     }
 
     public ItemBase ClickItem()
