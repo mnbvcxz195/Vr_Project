@@ -5,7 +5,6 @@ using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
-    //public List<ItemBase> items;          //획득한 아이템
     private bool inventoryActivated;      //인벤토리 활성화 여부
 
     [SerializeField]
@@ -20,7 +19,6 @@ public class Inventory : MonoBehaviour
 
     void Awake()
     {
-        //FreshSlot();
         for (int i = 0; i < slots.Length; i++)
         {
             int idx = i;
@@ -90,8 +88,10 @@ public class Inventory : MonoBehaviour
     {
         if (slots[idx].Item != null)
         {
-            slots[idx].SetItemCount(-1);
             Debug.Log($"아이템 사용");
+            slots[idx].SetItemCount(-1);
         }
+        else
+            Debug.Log($"텅");
     }
 }

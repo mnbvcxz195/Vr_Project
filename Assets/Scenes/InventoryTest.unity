@@ -594,6 +594,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1281460478}
     m_Modifications:
+    - target: {fileID: 3524629358134346980, guid: cf8406686bf9b15479e167cabcb5c423, type: 3}
+      propertyPath: m_Spacing.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524629358134346980, guid: cf8406686bf9b15479e167cabcb5c423, type: 3}
+      propertyPath: m_Spacing.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524629358134346980, guid: cf8406686bf9b15479e167cabcb5c423, type: 3}
+      propertyPath: m_CellSize.x
+      value: 105
+      objectReference: {fileID: 0}
+    - target: {fileID: 3524629358134346980, guid: cf8406686bf9b15479e167cabcb5c423, type: 3}
+      propertyPath: m_CellSize.y
+      value: 105
+      objectReference: {fileID: 0}
     - target: {fileID: 3524629359535981926, guid: cf8406686bf9b15479e167cabcb5c423, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
