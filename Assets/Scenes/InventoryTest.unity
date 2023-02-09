@@ -1135,6 +1135,10 @@ PrefabInstance:
       propertyPath: m_CellSize.y
       value: 105
       objectReference: {fileID: 0}
+    - target: {fileID: 3524629359535981925, guid: cf8406686bf9b15479e167cabcb5c423, type: 3}
+      propertyPath: myInven.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3524629359535981926, guid: cf8406686bf9b15479e167cabcb5c423, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

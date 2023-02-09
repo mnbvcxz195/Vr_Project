@@ -1,18 +1,41 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
 
+#region Inven: 내 아이템 목록 (테스트용)
+/// <summary> 내 아이템 목록 class </summary>
+[Serializable]
+public class Inven
+{
+    [SerializeField] public int itemCount;
+    [SerializeField] public ItemBase Item;
+}
+#endregion
+
 public class Inventory : MonoBehaviour
 {
+    #region 인벤토리 활성화 여부
     /// <summary> 인벤토리 활성화 여부 </summary>
+    #endregion
     private bool inventoryActivated;
 
+    #region 인벤토리 오브젝트
     /// <summary> 인벤토리 오브젝트 </summary>
+    #endregion
     [SerializeField] private Transform slotParent;
 
+    #region 인벤토리 슬롯
     /// <summary> 인벤토리 슬롯 </summary>
-    [SerializeField]  private Slot[] slots;
+    #endregion
+    [SerializeField] private Slot[] slots;
+
+    #region 내 아이템 목록 (테스트용)
+    /// <summary> 내 아이템 목록 </summary>
+    #endregion
+    [SerializeField] private Inven[] myItem;
+
 
     private void OnValidate()
     {
@@ -21,11 +44,15 @@ public class Inventory : MonoBehaviour
 
     void Awake()
     {
+        myItem = new Inven[slots.Length];
+
         for (int i = 0; i < slots.Length; i++)
         {
             int idx = i;
             slots[i].btnUsed.onClick.AddListener(() => { UseItem(idx); });
         }
+
+        TestList();
     }
 
     private void Update()
@@ -33,9 +60,20 @@ public class Inventory : MonoBehaviour
         OpenInventory();
     }
 
-    /// <summary>
-    /// 인벤토리 오픈 관리
-    /// </summary>
+    #region 테스트용
+    /// <summary> 인스펙터에 슬롯의 아이템 목록 표시 </summary>
+    public void TestList()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            int idx = i;
+            myItem[i].Item = slots[idx].Item;
+            myItem[i].itemCount = slots[idx].ItemCount;
+        }
+    }
+    #endregion
+
+    /// <summary> 인벤토리 오픈 관리 </summary>
     private void OpenInventory()
     {
         if (Input.GetKeyDown(KeyCode.I))
@@ -94,6 +132,7 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log($"아이템 사용");
             slots[idx].SetItemCount(-1);
+            TestList();
         }
         else
             Debug.Log($"텅");

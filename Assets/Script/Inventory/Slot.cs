@@ -5,25 +5,33 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
-    private ItemBase _item;                            //획득한 아이템
-    private int _itemCount;                             //획득한 아이템 개수
+    private ItemBase _item;   //획득한 아이템
+    private int _itemCount;   //획득한 아이템 개수
     [SerializeField] private GameObject goItemCount;
     [SerializeField] private Text txtItemCount;
 
+    #region 인벤토리 슬롯의 아이템 이미지
     /// <summary> 인벤토리 슬롯의 아이템 이미지 </summary>
+    #endregion
     [SerializeField] private Image imgItem;
 
+    #region 아이템 사용 버튼
     /// <summary> 아이템 사용 버튼 </summary>
+    #endregion
     public Button btnUsed;
 
+    #region 획득한 아이템 (get)
     /// <summary> 획득한 아이템 (get) </summary>
+    #endregion
     public ItemBase Item
     {
         get => _item;
         set => _item = value;
     }
 
+    #region 획득한 아이템 개수 (get)
     /// <summary> 획득한 아이템 개수 (get) </summary>
+    #endregion
     public int ItemCount
     {
         get => _itemCount;

@@ -5,7 +5,9 @@ using UnityEngine;
 public class ObjItem : MonoBehaviour
 {
     public ScriptableItem scriptableItem;
+    #region 아이템 유형
     /// <summary> 아이템 유형 </summary>
+    #endregion
     [SerializeField] private ItemType type;
     [SerializeField] private int itemIdx;
 
@@ -31,5 +33,6 @@ public class ObjItem : MonoBehaviour
     {
         inventory.AcquireItem(item);
         gameObject.SetActive(false);
+        inventory.TestList();
     }
 }
