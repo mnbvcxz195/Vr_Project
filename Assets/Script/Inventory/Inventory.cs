@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -36,7 +37,6 @@ public class Inventory : MonoBehaviour
     #endregion
     [SerializeField] private Inven[] myItem;
 
-
     private void OnValidate()
     {
         slots = slotParent.GetComponentsInChildren<Slot>();
@@ -44,8 +44,6 @@ public class Inventory : MonoBehaviour
 
     void Awake()
     {
-        myItem = new Inven[slots.Length];
-
         for (int i = 0; i < slots.Length; i++)
         {
             int idx = i;
@@ -55,6 +53,10 @@ public class Inventory : MonoBehaviour
 
     public void Start()
     {
+        myItem = new Inven[slots.Length];
+        for (int i = 0; i < myItem.Length; i++)
+            myItem[i] = new Inven();
+
         TestList();
     }
 
