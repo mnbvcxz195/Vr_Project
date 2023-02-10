@@ -27,33 +27,51 @@ public class Inventory : MonoBehaviour
     #endregion
     [SerializeField] private Transform slotParent;
 
+    //#region 인벤토리 슬롯
+    ///// <summary> 인벤토리 슬롯 (배열) </summary>
+    //#endregion
+    //[SerializeField] private Slot[] slots;
+
     #region 인벤토리 슬롯
-    /// <summary> 인벤토리 슬롯 </summary>
+    /// <summary> 인벤토리 슬롯 (Dictionary) </summary>
     #endregion
-    [SerializeField] private Slot[] slots;
+    public int[] _slotidxs;
+    public Dictionary<int, Slot> _slots = new Dictionary<int, Slot>();
 
     #region 내 아이템 목록 (테스트용)
     /// <summary> 내 아이템 목록 </summary>
     #endregion
     [SerializeField] private Inven[] myItem;
 
-    private void OnValidate()
-    {
-        slots = slotParent.GetComponentsInChildren<Slot>();
-    }
+    //private void OnValidate()
+    //{
+    //    slots = slotParent.GetComponentsInChildren<Slot>();
+    //}
 
     void Awake()
     {
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < 16; i++)
         {
             int idx = i;
-            slots[i].btnUsed.onClick.AddListener(() => { UseItem(idx); });
+            
+            var slot = slotParent.GetComponentsInChildren<Slot>()[idx];
+            _slots.Add(slot.Item.ItemIdx, slot);
+
+            slot.btnUsed.onClick.AddListener(() => { UseItem(idx); });
         }
+
+        Debug.Log($"딕셔너리 크기{_slots.Count}");
+
+        //for (int i = 0; i < slots.Length; i++)
+        //{
+        //    int idx = i;
+        //    slots[i].btnUsed.onClick.AddListener(() => { UseItem(idx); });
+        //}
     }
 
     public void Start()
     {
-        myItem = new Inven[slots.Length];
+        myItem = new Inven[_slots.Count];
         for (int i = 0; i < myItem.Length; i++)
             myItem[i] = new Inven();
 
@@ -69,11 +87,11 @@ public class Inventory : MonoBehaviour
     /// <summary> 인스펙터에 슬롯의 아이템 목록 표시 </summary>
     public void TestList()
     {
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < _slots.Count; i++)
         {
             int idx = i;
-            myItem[i].Item = slots[idx].Item;
-            myItem[i].itemCount = slots[idx].ItemCount;
+            myItem[i].Item = _slots[idx].Item;
+            myItem[i].itemCount = _slots[idx].ItemCount;
         }
     }
     #endregion
@@ -102,13 +120,13 @@ public class Inventory : MonoBehaviour
     {
         if (item.Type == ItemType.Ingredient || item.Type == ItemType.Consumable)
         {
-            for (int i = 0; i < slots.Length; i++)
+            for (int i = 0; i < _slots.Count; i++)
             {
-                if (slots[i].Item != null)
+                if (_slots[i].Item != null)
                 {
-                    if (slots[i].Item.ItemName == item.ItemName)
+                    if (_slots[i].Item.ItemName == item.ItemName)
                     {
-                        slots[i].SetItemCount(_count); //얻은 템이 중복템일 경우 아이템 개수 +1
+                        _slots[i].SetItemCount(_count); //얻은 템이 중복템일 경우 아이템 개수 +1
                         return;                        //중복템은 슬롯에 추가 X
                     }
                 }
@@ -116,27 +134,27 @@ public class Inventory : MonoBehaviour
         }
 
         int num = 0;
-        for (int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < _slots.Count; i++)
         {
-            if (slots[i].Item == null)                 //슬롯에 자리 남아있으면 얻은 아이템 추가
+            if (_slots[i].Item == null)                 //슬롯에 자리 남아있으면 얻은 아이템 추가
             {
-                slots[i].AddItem(item, _count);
+                _slots[i].AddItem(item, _count);
                 return;
             }
             else
                 num++;
         }
-        if (slots.Length <= num)
+        if (_slots.Count <= num)
             Debug.Log($"꽉참");
     }
 
     /// <summary> 아이템 사용 </summary>
     public void UseItem(int idx)
     {
-        if (slots[idx].Item != null)
+        if (_slots[idx].Item != null)
         {
             Debug.Log($"아이템 사용");
-            slots[idx].SetItemCount(-1);
+            _slots[idx].SetItemCount(-1);
             TestList();
         }
         else
