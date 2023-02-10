@@ -76,6 +76,5 @@ public class Slot : MonoBehaviour
         Item = null;
         imgItem.color = new Color(1, 1, 1, 0);
         goItemCount.SetActive(false);
-        Debug.Log($"еж");
     }
 }

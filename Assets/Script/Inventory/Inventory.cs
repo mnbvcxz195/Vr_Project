@@ -51,7 +51,10 @@ public class Inventory : MonoBehaviour
             int idx = i;
             slots[i].btnUsed.onClick.AddListener(() => { UseItem(idx); });
         }
+    }
 
+    public void Start()
+    {
         TestList();
     }
 
