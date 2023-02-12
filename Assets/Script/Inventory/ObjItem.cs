@@ -31,8 +31,7 @@ public class ObjItem : MonoBehaviour
     /// <summary> æ∆¿Ã≈€ »πµÊ </summary>
     public void PickUp()
     {
-        inventory.AcquireItem(item);
+        InventoryManager.GetInstance().AcquireItem(item);
         gameObject.SetActive(false);
-        inventory.TestList();
     }
 }

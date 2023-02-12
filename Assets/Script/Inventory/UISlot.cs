@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Slot : MonoBehaviour
+public class UISlot : MonoBehaviour
 {
     private ItemBase _item;   //획득한 아이템
     private int _itemCount;   //획득한 아이템 개수
@@ -62,7 +62,7 @@ public class Slot : MonoBehaviour
     /// <summary> 아이템 수량 관리 </summary>
     public void SetItemCount(int _count)
     {
-        ItemCount += _count;
+        ItemCount = _count;
         txtItemCount.text = $"{ItemCount}";
 
         if (ItemCount <= 0)

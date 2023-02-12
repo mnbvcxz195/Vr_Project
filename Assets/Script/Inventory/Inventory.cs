@@ -5,77 +5,69 @@ using System.Linq;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-#region Inven: ³» ¾ÆÀÌÅÛ ¸ñ·Ï (Å×½ºÆ®¿ë)
-/// <summary> ³» ¾ÆÀÌÅÛ ¸ñ·Ï class </summary>
-[Serializable]
-public class Inven
-{
-    [SerializeField] public int itemCount;
-    [SerializeField] public ItemBase Item;
-}
-#endregion
+
 
 public class Inventory : MonoBehaviour
 {
-    #region ÀÎº¥Åä¸® È°¼ºÈ­ ¿©ºÎ
-    /// <summary> ÀÎº¥Åä¸® È°¼ºÈ­ ¿©ºÎ </summary>
+    #region ì¸ë²¤í† ë¦¬ í™œì„±í™” ì—¬ë¶€
+    /// <summary> ì¸ë²¤í† ë¦¬ í™œì„±í™” ì—¬ë¶€ </summary>
     #endregion
     private bool inventoryActivated;
 
-    #region ÀÎº¥Åä¸® ¿ÀºêÁ§Æ®
-    /// <summary> ÀÎº¥Åä¸® ¿ÀºêÁ§Æ® </summary>
+    #region ì¸ë²¤í† ë¦¬ ë§¤ë‹ˆì €
+    /// <summary> ì¸ë²¤í† ë¦¬ ë§¤ë‹ˆì € </summary>
+    #endregion
+    private InventoryManager _inventoryManager;
+    
+    #region ì¸ë²¤í† ë¦¬ ì˜¤ë¸Œì íŠ¸
+    /// <summary> ì¸ë²¤í† ë¦¬ ì˜¤ë¸Œì íŠ¸ </summary>
     #endregion
     [SerializeField] private Transform slotParent;
 
-    //#region ÀÎº¥Åä¸® ½½·Ô
-    ///// <summary> ÀÎº¥Åä¸® ½½·Ô (¹è¿­) </summary>
-    //#endregion
-    //[SerializeField] private Slot[] slots;
-
-    #region ÀÎº¥Åä¸® ½½·Ô
-    /// <summary> ÀÎº¥Åä¸® ½½·Ô (Dictionary) </summary>
+    #region ì¸ë²¤í† ë¦¬ ìŠ¬ë¡¯
+    /// <summary> ì¸ë²¤í† ë¦¬ ìŠ¬ë¡¯ (ë°°ì—´) </summary>
     #endregion
-    public int[] _slotidxs;
-    public Dictionary<int, Slot> _slots = new Dictionary<int, Slot>();
-
-    #region ³» ¾ÆÀÌÅÛ ¸ñ·Ï (Å×½ºÆ®¿ë)
-    /// <summary> ³» ¾ÆÀÌÅÛ ¸ñ·Ï </summary>
+    [SerializeField] private UISlot[] slots;
+    
+    #region ë‚´ ì•„ì´í…œ ëª©ë¡ (í…ŒìŠ¤íŠ¸ìš©)
+    /// <summary> ë‚´ ì•„ì´í…œ ëª©ë¡ </summary>
     #endregion
-    [SerializeField] private Inven[] myItem;
-
-    //private void OnValidate()
-    //{
-    //    slots = slotParent.GetComponentsInChildren<Slot>();
-    //}
+    [SerializeField] private Item[] myItem;
 
     void Awake()
     {
-        for (int i = 0; i < 16; i++)
+        _inventoryManager = InventoryManager.GetInstance();
+        _inventoryManager.OnItemAddHandler += ItemAdd;
+        _inventoryManager.OnItemUseHandler += ItemUse;
+        
+        slots = slotParent.GetComponentsInChildren<UISlot>();
+        
+        for (int i = 0; i < slots.Length; i++)
         {
             int idx = i;
             
-            var slot = slotParent.GetComponentsInChildren<Slot>()[idx];
-            _slots.Add(slot.Item.ItemIdx, slot);
-
-            slot.btnUsed.onClick.AddListener(() => { UseItem(idx); });
+            slots[i].btnUsed.onClick.AddListener(() =>
+            {
+                if(slots[idx].Item == null)
+                    return;
+                
+                ItemType itemType = slots[idx].Item.Type;
+                int itemIdx = slots[idx].Item.ItemIdx; 
+                
+                _inventoryManager.UseItem(itemType, itemIdx);
+            });
         }
-
-        Debug.Log($"µñ¼Å³Ê¸® Å©±â{_slots.Count}");
-
-        //for (int i = 0; i < slots.Length; i++)
-        //{
-        //    int idx = i;
-        //    slots[i].btnUsed.onClick.AddListener(() => { UseItem(idx); });
-        //}
     }
 
     public void Start()
     {
-        myItem = new Inven[_slots.Count];
+        myItem = new Item[slots.Length];
         for (int i = 0; i < myItem.Length; i++)
-            myItem[i] = new Inven();
+            myItem[i] = new Item();
 
-        TestList();
+        // var inventoryItem = _inventoryManager.Items;
+        // foreach (var item in inventoryItem.Values)
+        //     slots[item.itemPosition].AddItem(item.item, item.itemCount);
     }
 
     private void Update()
@@ -83,20 +75,7 @@ public class Inventory : MonoBehaviour
         OpenInventory();
     }
 
-    #region Å×½ºÆ®¿ë
-    /// <summary> ÀÎ½ºÆåÅÍ¿¡ ½½·ÔÀÇ ¾ÆÀÌÅÛ ¸ñ·Ï Ç¥½Ã </summary>
-    public void TestList()
-    {
-        for (int i = 0; i < _slots.Count; i++)
-        {
-            int idx = i;
-            myItem[i].Item = _slots[idx].Item;
-            myItem[i].itemCount = _slots[idx].ItemCount;
-        }
-    }
-    #endregion
-
-    /// <summary> ÀÎº¥Åä¸® ¿ÀÇÂ °ü¸® </summary>
+    /// <summary> ì¸ë²¤í† ë¦¬ ì˜¤í”ˆ ê´€ë¦¬ </summary>
     private void OpenInventory()
     {
         if (Input.GetKeyDown(KeyCode.I))
@@ -115,49 +94,38 @@ public class Inventory : MonoBehaviour
 
     }
 
-    /// <summary> ¾ÆÀÌÅÛ È¹µæ </summary>
-    public void AcquireItem(ItemBase item, int _count = 1)
+    void ItemAdd(Item item)
     {
-        if (item.Type == ItemType.Ingredient || item.Type == ItemType.Consumable)
-        {
-            for (int i = 0; i < _slots.Count; i++)
-            {
-                if (_slots[i].Item != null)
-                {
-                    if (_slots[i].Item.ItemName == item.ItemName)
-                    {
-                        _slots[i].SetItemCount(_count); //¾òÀº ÅÛÀÌ Áßº¹ÅÛÀÏ °æ¿ì ¾ÆÀÌÅÛ °³¼ö +1
-                        return;                        //Áßº¹ÅÛÀº ½½·Ô¿¡ Ãß°¡ X
-                    }
-                }
-            }
-        }
-
-        int num = 0;
-        for (int i = 0; i < _slots.Count; i++)
-        {
-            if (_slots[i].Item == null)                 //½½·Ô¿¡ ÀÚ¸® ³²¾ÆÀÖÀ¸¸é ¾òÀº ¾ÆÀÌÅÛ Ãß°¡
-            {
-                _slots[i].AddItem(item, _count);
-                return;
-            }
-            else
-                num++;
-        }
-        if (_slots.Count <= num)
-            Debug.Log($"²ËÂü");
-    }
-
-    /// <summary> ¾ÆÀÌÅÛ »ç¿ë </summary>
-    public void UseItem(int idx)
-    {
-        if (_slots[idx].Item != null)
-        {
-            Debug.Log($"¾ÆÀÌÅÛ »ç¿ë");
-            _slots[idx].SetItemCount(-1);
-            TestList();
-        }
+        var slot = slots[item.itemPosition];
+        
+        if(slot.Item == null)
+            slot.AddItem(item.item, item.itemCount);
         else
-            Debug.Log($"ÅÖ");
+            slot.SetItemCount(item.itemCount);
+
+        TestList();
     }
+
+    void ItemUse(Item item)
+    {
+        var slot = slots[item.itemPosition];
+        slot.SetItemCount(item.itemCount);
+        
+        TestList();
+    }
+    
+    
+    #region í…ŒìŠ¤íŠ¸ìš©
+    /// <summary> ì¸ìŠ¤í™í„°ì— ìŠ¬ë¡¯ì˜ ì•„ì´í…œ ëª©ë¡ í‘œì‹œ </summary>
+    public void TestList()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            int idx = i;
+            myItem[i].item = slots[idx].Item;
+            myItem[i].itemCount = slots[idx].ItemCount;
+        }
+    }
+    #endregion
+
 }
