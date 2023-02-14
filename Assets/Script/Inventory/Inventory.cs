@@ -5,8 +5,6 @@ using System.Linq;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-
-
 public class Inventory : MonoBehaviour
 {
     #region 인벤토리 활성화 여부
@@ -28,46 +26,17 @@ public class Inventory : MonoBehaviour
     /// <summary> 인벤토리 슬롯 (배열) </summary>
     #endregion
     [SerializeField] private UISlot[] slots;
-    
-    #region 내 아이템 목록 (테스트용)
-    /// <summary> 내 아이템 목록 </summary>
-    #endregion
-    [SerializeField] private Item[] myItem;
+
+    private int changeSlotIdx;
+    public int ChangeIdx => changeSlotIdx;
+
 
     void Awake()
     {
         _inventoryManager = InventoryManager.GetInstance();
         _inventoryManager.OnItemAddHandler += ItemAdd;
-        _inventoryManager.OnItemUseHandler += ItemUse;
         
         slots = slotParent.GetComponentsInChildren<UISlot>();
-        
-        for (int i = 0; i < slots.Length; i++)
-        {
-            int idx = i;
-            
-            slots[i].btnUsed.onClick.AddListener(() =>
-            {
-                if(slots[idx].Item == null)
-                    return;
-                
-                ItemType itemType = slots[idx].Item.Type;
-                int itemIdx = slots[idx].Item.ItemIdx; 
-                
-                _inventoryManager.UseItem(itemType, itemIdx);
-            });
-        }
-    }
-
-    public void Start()
-    {
-        myItem = new Item[slots.Length];
-        for (int i = 0; i < myItem.Length; i++)
-            myItem[i] = new Item();
-
-        // var inventoryItem = _inventoryManager.Items;
-        // foreach (var item in inventoryItem.Values)
-        //     slots[item.itemPosition].AddItem(item.item, item.itemCount);
     }
 
     private void Update()
@@ -102,30 +71,35 @@ public class Inventory : MonoBehaviour
             slot.AddItem(item.item, item.itemCount);
         else
             slot.SetItemCount(item.itemCount);
-
-        TestList();
     }
 
-    void ItemUse(Item item)
-    {
-        var slot = slots[item.itemPosition];
-        slot.SetItemCount(item.itemCount);
-        
-        TestList();
-    }
-    
-    
-    #region 테스트용
-    /// <summary> 인스펙터에 슬롯의 아이템 목록 표시 </summary>
-    public void TestList()
+    public int ChangeSlotIdx()
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            int idx = i;
-            myItem[i].item = slots[idx].Item;
-            myItem[i].itemCount = slots[idx].ItemCount;
+            if (slots[i].dropItem)
+            {
+                changeSlotIdx = i;
+                slots[i].dropItem = false;
+            }
         }
-    }
-    #endregion
 
+        return changeSlotIdx;
+    }
+
+    public void EquipItem()
+    {
+        if(!_inventoryManager.Equip)
+            return;
+
+        if (_inventoryManager._preIdx < 10)
+            slots[_inventoryManager.Items[_inventoryManager.preUse][_inventoryManager._preIdx].itemPosition].SetEquipColor(1);
+        if (_inventoryManager._curIdx < 10)
+            slots[_inventoryManager.Items[_inventoryManager.curUse][_inventoryManager._curIdx].itemPosition].SetEquipColor(0.5f);
+    }
+
+    public void SpendSelectItem(int idx, int count)
+    {
+        slots[idx].SetItemCount(count);
+    }
 }
