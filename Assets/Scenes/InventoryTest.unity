@@ -580,19 +580,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b03c3772c60c3948a3a4c2fb8191e59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ScriptableItem: {fileID: 11400000, guid: fba594926d7f87f48bf4c7b88858a600, type: 2}
-  _UICreateSlot:
-  - {fileID: 1983510246}
-  - {fileID: 1924685366}
-  Create: {fileID: 490640414}
-  _ItemBase:
-    itemIdx: 0
-    itemName: 
-    itemImage: {fileID: 0}
-    itemPrefab: {fileID: 0}
-  type: 0
-  itemnumber: 0
-  testtt: 0
 --- !u!1 &488224177
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,22 +606,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 488224177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b03c3772c60c3948a3a4c2fb8191e59, type: 3}
+  m_Script: {fileID: 11500000, guid: f4922cfbe1d5d114e9cbf3bcd4bc311e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _ScriptableItem: {fileID: 11400000, guid: fba594926d7f87f48bf4c7b88858a600, type: 2}
   _UICreateSlot:
   - {fileID: 1983510246}
   - {fileID: 1924685366}
-  Create: {fileID: 0}
-  _ItemBase:
-    itemIdx: 0
-    itemName: 
-    itemImage: {fileID: 0}
-    itemPrefab: {fileID: 0}
-  type: 0
+  Createtype: 0
   itemnumber: 0
-  testtt: 0
+  Createbool: 0
 --- !u!4 &488224179
 Transform:
   m_ObjectHideFlags: 0
@@ -2449,7 +2430,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1821626199}
   - component: {fileID: 1821626200}
-  - component: {fileID: 1821626201}
   m_Layer: 5
   m_Name: Workroom
   m_TagString: Untagged
@@ -2492,26 +2472,6 @@ MonoBehaviour:
   slotParent: {fileID: 1534723806}
   uICreateSlot: []
   btnCreate: {fileID: 490640414}
---- !u!114 &1821626201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1821626198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4922cfbe1d5d114e9cbf3bcd4bc311e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ScriptableItem: {fileID: 0}
-  itemIdx: 0
-  Combinationbnt1: {fileID: 0}
-  Combinationbnt2: {fileID: 0}
-  _UICreateSlot:
-  - {fileID: 1983510246}
-  - {fileID: 1924685366}
-  bb: {fileID: 490640414}
 --- !u!1001 &1866203479
 PrefabInstance:
   m_ObjectHideFlags: 0
