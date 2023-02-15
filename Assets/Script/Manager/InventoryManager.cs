@@ -42,9 +42,13 @@ public class InventoryManager : MonoBehaviour
 
 
 
+    public ItemCombination _ItemCombination;
+
     public delegate void ItemUpdateHandler(Item item);
     public event ItemUpdateHandler OnItemAddHandler;
     public event ItemUpdateHandler OnItemUseHandler;
+        public CombinationReciepeManager _combinationR = new CombinationReciepeManager();
+
     
     private void Awake()
     {
@@ -55,6 +59,8 @@ public class InventoryManager : MonoBehaviour
         
         for (int i = 0; i < _inventoryCount; i++)
             _itemPosition.Push(i);
+        _ItemCombination = GameObject.FindWithTag("ItemCombination").GetComponent<ItemCombination>();//인벤토리 찾아주기
+
     }
 
     /// <summary> 아이템 획득 </summary>
@@ -105,31 +111,34 @@ public class InventoryManager : MonoBehaviour
         var itemList2 = Items[type2];
         if (itemList1[idx1].item != null && itemList2[idx2].item != null)
         {
-            //if(조합 성공하면)
-            Debug.Log($"[{itemList1[idx1].item.ItemName}] 아이템과 [{itemList2[idx2].item.ItemName}]아이템을 사용하였습니다.");
-            mix = true;
-
-            var count1 = itemList1[idx1].SetItemCount(-1);
-            var count2 = itemList2[idx2].SetItemCount(-1);
-
-            mixItem1 = itemList1[idx1].itemPosition;
-            mixItem2 = itemList2[idx2].itemPosition;
-            mixItemCount1 = itemList1[idx1].itemCount;
-            mixItemCount2 = itemList2[idx2].itemCount;
-
-            if (count1 <= 0)
+            _ItemCombination.Combination(_ItemCombination.Createtype, _ItemCombination.itemnumber);
+            if (_ItemCombination.Createbool == true)
             {
-                _itemPosition.Push(itemList1[idx1].itemPosition);
-                itemList1.Remove(idx1);
-            }
-            if (count2 <= 0)
-            {
-                _itemPosition.Push(itemList2[idx2].itemPosition);
-                itemList2.Remove(idx2);
-            }
+                Debug.Log($"[{itemList1[idx1].item.ItemName}] 아이템과 [{itemList2[idx2].item.ItemName}]아이템을 사용하였습니다.");
+                mix = true;
 
-            //조합 실패하면
-            //mix = false;
+                var count1 = itemList1[idx1].SetItemCount(-1);
+                var count2 = itemList2[idx2].SetItemCount(-1);
+
+                mixItem1 = itemList1[idx1].itemPosition;
+                mixItem2 = itemList2[idx2].itemPosition;
+                mixItemCount1 = itemList1[idx1].itemCount;
+                mixItemCount2 = itemList2[idx2].itemCount;
+
+                if (count1 <= 0)
+                {
+                    _itemPosition.Push(itemList1[idx1].itemPosition);
+                    itemList1.Remove(idx1);
+                }
+                if (count2 <= 0)
+                {
+                    _itemPosition.Push(itemList2[idx2].itemPosition);
+                    itemList2.Remove(idx2);
+                }
+
+            }
+            else
+            mix = false;
         }
     }
 
