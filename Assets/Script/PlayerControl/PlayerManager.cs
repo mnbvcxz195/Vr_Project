@@ -52,7 +52,12 @@ public class PlayerManager : MonoBehaviour
         }
         else return;
     }
-    void test()
+    public void healhp(int heal)
+    {
+        Newplayer.PlayerHp += heal;
+    }
+
+        void test()
     {
         Newplayer.ondemege = true;
 
