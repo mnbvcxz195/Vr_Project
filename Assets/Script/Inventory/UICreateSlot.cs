@@ -24,7 +24,7 @@ public class UICreateSlot : MonoBehaviour, IPointerClickHandler, IDropHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
             ClearSelected();
             imgItem.color = new Color(1, 1, 1, 0);
