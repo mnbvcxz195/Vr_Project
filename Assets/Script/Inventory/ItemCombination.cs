@@ -10,7 +10,7 @@ public class CombinationReciepeManager
         { 0, new CombinationReciepe(14, 15,ItemType.Weapon,1) },
         { 1, new CombinationReciepe(16, 17 ,ItemType.Consumable,0) },
         { 2, new CombinationReciepe(15, 15 ,ItemType.Consumable,1) },
-        { 3, new CombinationReciepe(14, 14 ,ItemType.ETC,0) },
+        { 3, new CombinationReciepe(14, 16 ,ItemType.ETC,0) },
         { 4, new CombinationReciepe(16, 16 ,ItemType.ETC,1) },
         { 5, new CombinationReciepe(17, 17 ,ItemType.ETC,2) }
 
