@@ -12,11 +12,10 @@ public class ObjItem : MonoBehaviour
     [SerializeField] private int itemIdx;
 
     ItemBase item;
-    Inventory inventory;
 
     void Awake()
     {
-        inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
+        //inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
 
         item = scriptableItem.GetItemList(type)[itemIdx];  //아이템 지정
 
