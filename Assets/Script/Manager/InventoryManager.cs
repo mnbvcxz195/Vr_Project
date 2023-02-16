@@ -43,6 +43,7 @@ public class InventoryManager : MonoBehaviour
 
 
     public ItemCombination _ItemCombination;
+    ItemEffectDatabase itemEffectDatabase;
 
     public delegate void ItemUpdateHandler(Item item);
     public event ItemUpdateHandler OnItemAddHandler;
@@ -60,6 +61,7 @@ public class InventoryManager : MonoBehaviour
         for (int i = 0; i < _inventoryCount; i++)
             _itemPosition.Push(i);
         _ItemCombination = GameObject.FindWithTag("ItemCombination").GetComponent<ItemCombination>();//인벤토리 찾아주기
+        itemEffectDatabase = GameObject.FindWithTag("Database").GetComponent<ItemEffectDatabase>();
 
     }
 
@@ -209,11 +211,12 @@ public class InventoryManager : MonoBehaviour
             else
                 Debug.Log($"텅");
         }
-        else
+        else if (type == ItemType.Consumable)
         {
             if (itemList[idx].item != null)
             {
-                Debug.Log($"[{itemList[idx].item.ItemName}] 아이템을 사용하였습니다.");
+
+                itemEffectDatabase.UseConsumable(type, itemList[idx].item.ItemName);
                 Equip = false;
                 var count = itemList[idx].SetItemCount(-1);
                 test = itemList[idx].itemCount;
@@ -227,6 +230,11 @@ public class InventoryManager : MonoBehaviour
             }
             else
                 Debug.Log($"텅");
+        }
+        else
+        {
+            test = itemList[idx].itemCount;
+            Debug.Log($"직접 사용할 수 없는 아이템입니다.");
         }
     }
 
