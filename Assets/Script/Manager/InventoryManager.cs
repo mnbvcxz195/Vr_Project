@@ -111,34 +111,74 @@ public class InventoryManager : MonoBehaviour
         var itemList2 = Items[type2];
         if (itemList1[idx1].item != null && itemList2[idx2].item != null)
         {
-            _ItemCombination.Combination(_ItemCombination.Createtype, _ItemCombination.itemnumber);
-            if (_ItemCombination.Createbool == true)
+            if (type1 == type2 && idx1 == idx2)
             {
-                Debug.Log($"[{itemList1[idx1].item.ItemName}] 아이템과 [{itemList2[idx2].item.ItemName}]아이템을 사용하였습니다.");
-                mix = true;
-
-                var count1 = itemList1[idx1].SetItemCount(-1);
-                var count2 = itemList2[idx2].SetItemCount(-1);
-
-                mixItem1 = itemList1[idx1].itemPosition;
-                mixItem2 = itemList2[idx2].itemPosition;
-                mixItemCount1 = itemList1[idx1].itemCount;
-                mixItemCount2 = itemList2[idx2].itemCount;
-
-                if (count1 <= 0)
+                if (itemList1[idx1].itemCount < 2)
                 {
-                    _itemPosition.Push(itemList1[idx1].itemPosition);
-                    itemList1.Remove(idx1);
+                    mix = false;
+                    Debug.Log("재료가 부족합니다.");
+                    return;
                 }
-                if (count2 <= 0)
+                _ItemCombination.Combination(_ItemCombination.Createtype, _ItemCombination.itemnumber);
+                if (_ItemCombination.Createbool == true)
                 {
-                    _itemPosition.Push(itemList2[idx2].itemPosition);
-                    itemList2.Remove(idx2);
-                }
+                    Debug.Log($"[{itemList1[idx1].item.ItemName}] 아이템과 [{itemList2[idx2].item.ItemName}]아이템을 사용하였습니다.");
+                    mix = true;
 
+                    var count1 = itemList1[idx1].SetItemCount(-1);
+                    var count2 = itemList2[idx2].SetItemCount(-1);
+
+                    mixItem1 = itemList1[idx1].itemPosition;
+                    mixItem2 = itemList2[idx2].itemPosition;
+                    mixItemCount1 = itemList1[idx1].itemCount;
+                    mixItemCount2 = itemList2[idx2].itemCount;
+
+                    if (count1 <= 0)
+                    {
+                        _itemPosition.Push(itemList1[idx1].itemPosition);
+                        itemList1.Remove(idx1);
+                    }
+                    if (count2 <= 0)
+                    {
+                        _itemPosition.Push(itemList2[idx2].itemPosition);
+                        itemList2.Remove(idx2);
+                    }
+
+                }
+                else
+                    mix = false;
             }
             else
-            mix = false;
+            {
+                _ItemCombination.Combination(_ItemCombination.Createtype, _ItemCombination.itemnumber);
+                if (_ItemCombination.Createbool == true)
+                {
+                    Debug.Log($"[{itemList1[idx1].item.ItemName}] 아이템과 [{itemList2[idx2].item.ItemName}]아이템을 사용하였습니다.");
+                    mix = true;
+
+                    var count1 = itemList1[idx1].SetItemCount(-1);
+                    var count2 = itemList2[idx2].SetItemCount(-1);
+
+                    mixItem1 = itemList1[idx1].itemPosition;
+                    mixItem2 = itemList2[idx2].itemPosition;
+                    mixItemCount1 = itemList1[idx1].itemCount;
+                    mixItemCount2 = itemList2[idx2].itemCount;
+
+                    if (count1 <= 0)
+                    {
+                        _itemPosition.Push(itemList1[idx1].itemPosition);
+                        itemList1.Remove(idx1);
+                    }
+                    if (count2 <= 0)
+                    {
+                        _itemPosition.Push(itemList2[idx2].itemPosition);
+                        itemList2.Remove(idx2);
+                    }
+
+                }
+                else
+                    mix = false;
+            }
         }
     }
 

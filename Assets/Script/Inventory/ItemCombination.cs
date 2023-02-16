@@ -59,7 +59,7 @@ public class ItemCombination : MonoBehaviour
     void Start()
     {
         _Inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
-        _InventoryManager = GameObject.FindWithTag("InventoryManager").GetComponent<InventoryManager>();
+        _InventoryManager = InventoryManager.GetInstance();
     }
     public void Combination(ItemType type, int code)
     {
@@ -75,13 +75,13 @@ public class ItemCombination : MonoBehaviour
                 itemnumber = curRecp.CombinationIdx;
                 _ItemBase = _ScriptableItem.GetItemList(type)[itemnumber];
                 InventoryManager.GetInstance().AcquireItem(_ItemBase, 1);
-                Debug.Log("조합 성공");
+                Debug.Log($"조합 성공{i}");
                 return;
             }
             else
             {
                 Createbool = false;
-                Debug.Log("조합 실패");
+                Debug.Log($"조합 실패{i}");
             }
         }
     }
