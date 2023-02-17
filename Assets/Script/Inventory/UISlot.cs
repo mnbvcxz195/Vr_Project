@@ -92,7 +92,7 @@ public class UISlot : MonoBehaviour, IPointerClickHandler, IBeginDragHandler, ID
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
             if (Item == null)
             {
