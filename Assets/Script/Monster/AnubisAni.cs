@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : MonoBehaviour
+public class AnubisAni : MonoBehaviour
 {
     [SerializeField] Camera cam;
     Vector3 camerori;
@@ -21,8 +21,11 @@ public class Monster : MonoBehaviour
 
     public int speed = 1;
     public float traceDist = 15f; //플레이어 추적범위 넘어가면 점프애니메이션발동
-    public float MonAttck = 4f; //몬스터가 공격을할수있는범위
+    public float MonAttck = 3f; //몬스터가 공격을할수있는범위
     public bool isDie = false;
+    Vector3 vete;
+    Vector3 vetea;
+
 
     void Start()
     {
@@ -33,14 +36,16 @@ public class Monster : MonoBehaviour
     }
     void Update()
     {
-
+        AnubisDie();
         switch (state) // 상태마다 움직이는 속도체크
         {
             case State.Run:
-                MonsterMove(1);
-                break;
             case State.Jump:
-                MonsterMove(6);
+                if (atr.GetCurrentAnimatorStateInfo(0).IsName("jump"))
+                {
+                    MonsterMove(6);
+                }
+                MonsterMove(1);
                 break;
         }
     }
@@ -48,6 +53,11 @@ public class Monster : MonoBehaviour
     {
         while(!isDie)
         {
+           if(MonsterManager.GetInstance().battle == true)
+            {
+                atr.SetBool("IsBattle", true);
+
+            }
             yield return new WaitForSeconds(0.3f);
             for (int i = 0; i < 3; i++)
             {
@@ -57,6 +67,7 @@ public class Monster : MonoBehaviour
             CameraShake();
 
             float distance = Vector3.Distance(pla.transform.position, transform.position);
+            Debug.Log($"{distance}");
             if(distance <= MonAttck)
             {
                 int random = Random.Range(0, 3);
@@ -91,24 +102,24 @@ public class Monster : MonoBehaviour
             {
                 case State.Run:
                     atr.SetBool("IsRun", true);
-                    Debug.Log("이스런");
+                    //Debug.Log("이스런");
                     break;
                 case State.Jump:
                     atr.SetBool("IsJump", true);
-                    Debug.Log("이스점프");
+                    //Debug.Log("이스점프");
                     break;
                 case State.Attck0:
                     atr.SetBool("IsAttck_0", true);
-                    Debug.Log("공격1");
+                    //Debug.Log("공격1");
 
                     break;
                 case State.Attck1:
                     atr.SetBool("IsAttck_1", true);
-                    Debug.Log("공격2");
+                    //Debug.Log("공격2");
                     break;
                 case State.Attck2:
                     atr.SetBool("IsAttck_2", true);
-                    Debug.Log("공격3");
+                    //Debug.Log("공격3");
                     break;
             }
             yield return new WaitForSeconds(0.3f);
@@ -129,16 +140,31 @@ public class Monster : MonoBehaviour
     }
     void MonsterMove(int i) //몬스터가 플레이어를 추적하겠금
     {
-        transform.position = Vector3.MoveTowards(transform.position, pla.transform.position, (speed * i) * Time.deltaTime);
-        Vector3 lookPos = pla.transform.position - transform.position;
-        Vector3 l_vector = pla.transform.position - transform.position;
-        transform.rotation = Quaternion.LookRotation(l_vector).normalized;
+        if(!isDie && MonsterManager.GetInstance().battle)
+        {
+            Vector3 l_vector = pla.transform.position - transform.position;
+            transform.rotation = Quaternion.LookRotation(new Vector3(l_vector.x, vete.y, l_vector.z)).normalized;
+
+            if (atr.GetCurrentAnimatorStateInfo(0).IsName("walk") || atr.GetCurrentAnimatorStateInfo(0).IsName("jump"))
+            {
+                transform.position = Vector3.MoveTowards(transform.position, pla.transform.position, (speed * i) * Time.deltaTime);
+            }
+
+        }
     }
     void CameraShake() // 애니메이션이 점프일때 그 애니메이션이 0.8이상일때 진동하겠금
     {
         if(atr.GetCurrentAnimatorStateInfo(0).IsName("Jump")&&atr.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.8f)
         {
             StartCoroutine(camerashake(0.5f, 0.1f));
+        }
+    }
+    void AnubisDie()
+    {
+        if(MonsterManager.GetInstance().Newmonster.MonsterHp <= 0)
+        {
+            isDie = true;
+            atr.SetBool("IsDie", true);
         }
     }
 }

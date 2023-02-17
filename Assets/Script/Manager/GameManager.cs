@@ -21,6 +21,24 @@ public class GameManager : MonoBehaviour
 
     }
     #endregion
+    public PlayerState Newplayer = new PlayerState(100, true);
+
+    public void Damege(int demege)
+    {
+        if (Newplayer.ondamege == true)
+        {
+            Newplayer.ondamege = false;
+            Newplayer.Hp -= demege;
+            Invoke("Damegedelay", 1f);
+        }
+        else return;
+    }
+    void Damegedelay()
+    {
+        Newplayer.ondamege = true;
+
+    }
+
     public List<trap> trapList = new List<trap>();
 
     public void CheckTrap()
