@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.GetInstance().CheckTrap();
+        //GameManager.GetInstance().CheckTrap();
         rigid = GetComponent<Rigidbody>();
         weapon = GetComponentInChildren<WeaponPistol>();
     }
@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     {
         Move();
         Jump();
-        ttest();
+        //ttest();
         UpdateWeaponAction();
     }
     void Move()
@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
             rigid.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
         }
     }
-    void ttest()
+/*    void ttest()
     {
         Debug.Log("2");
 
@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
                 tarpp.gameObject.SetActive(false);
             }
         }
-    }
+    }*/
 
     private void UpdateWeaponAction()
     {

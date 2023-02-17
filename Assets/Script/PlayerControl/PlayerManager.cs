@@ -8,12 +8,12 @@ using UnityEngine.UI;
 public class PlayerStatetest
 {
     public int PlayerHp;
-    public bool ondemege;
+    public bool ondamage;
 
-    public PlayerStatetest(int hp, bool damegedelay)
+    public PlayerStatetest(int hp, bool damagedelay)
     {
         PlayerHp = hp;
-        ondemege = damegedelay;
+        ondamage = damagedelay;
 
     }
 }
@@ -41,14 +41,14 @@ public class PlayerManager : MonoBehaviour
     public PlayerStatetest Newplayer = new PlayerStatetest(100, true);
     [SerializeField] Image demegeImg;
 
-    public void Demege(int demege)
+    public void Damage(int demege)
     {
-        if (Newplayer.ondemege == true)
+        if (Newplayer.ondamage == true)
         {
-            Newplayer.ondemege = false;
+            Newplayer.ondamage = false;
             Newplayer.PlayerHp -= demege;
             demegeImgfade();
-            Invoke("test", 1f);
+            Invoke("DamageTrue", 1f);
         }
         else return;
     }
@@ -57,9 +57,9 @@ public class PlayerManager : MonoBehaviour
         Newplayer.PlayerHp += heal;
     }
 
-        void test()
+        void DamageTrue()
     {
-        Newplayer.ondemege = true;
+        Newplayer.ondamage = true;
 
     }
     public void demegeImgfade()
