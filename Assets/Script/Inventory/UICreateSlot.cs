@@ -49,7 +49,5 @@ public class UICreateSlot : MonoBehaviour, IPointerClickHandler, IDropHandler
         imgItem.sprite = _item.ItemImage;
         imgItem.color = new Color(1, 1, 1, 1);
         Debug.Log($"재료 선택: {_item.ItemName}");
-        Debug.Log($"재료 idx: {_item.ItemIdx}");
-
     }
 }
