@@ -39,6 +39,11 @@ public class InventoryManager : MonoBehaviour
     Item tempItem;
     int tempPosNum;
     public bool Equip;
+    public bool curEquip = true;
+
+    public int keyCount;
+    public bool key;
+    public bool is1st;
 
 
 
@@ -195,18 +200,33 @@ public class InventoryManager : MonoBehaviour
             {
                 if (_curIdx < 10)
                 {
-                    Debug.Log($"{Items[curUse][_curIdx].item.ItemName} 장착 해제");
-                    Items[curUse][_curIdx].use = false;
+                    if (_curIdx == idx && curUse == type)
+                    {
+                        Debug.Log($"이미 장착 중인 아이템입니다.");
+
+                    }
+                    else
+                    {
+                        Debug.Log($"{Items[curUse][_curIdx].item.ItemName} 장착 해제");
+                        Items[curUse][_curIdx].use = false;
+                        curEquip = true;
+                    }
                     _preIdx = _curIdx;
                     preUse = curUse;
                 }
 
+                Equip = true;
                 itemList[idx].use = true;
                 _curIdx = idx;
                 curUse = type;
                 test = itemList[idx].itemCount;
-                Equip = true;
-                Debug.Log($"[{itemList[idx].item.ItemName}] 아이템을 장착하였습니다.");
+
+                if (curEquip)
+                {
+                    Debug.Log($"[{itemList[idx].item.ItemName}] 아이템을 장착하였습니다.");
+                    itemEffectDatabase.UseItemEffect(type, itemList[idx].item.ItemName);
+                    curEquip = false;
+                }
             }
             else
                 Debug.Log($"텅");

@@ -11,6 +11,7 @@ public class Workroom : MonoBehaviour
     private InventoryManager _inventoryManager;
     [SerializeField] private Button btnCreate;
     Inventory inventory;
+    public UITurotialGuide guide;
 
     void Start()
     {
@@ -32,6 +33,15 @@ public class Workroom : MonoBehaviour
                 inventory.SpendSelectItem(_inventoryManager.mixItem1, _inventoryManager.mixItemCount1);
                 inventory.SpendSelectItem(_inventoryManager.mixItem2, _inventoryManager.mixItemCount2);
                 _inventoryManager.mix = false;
+            }
+
+            if (!_inventoryManager.key)
+            {
+                if (_inventoryManager.Items[ItemType.ETC].ContainsKey(0))
+                {
+                    guide.OnTrigger(6);
+                    _inventoryManager.key = true;
+                }
             }
         }
         else

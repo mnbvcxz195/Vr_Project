@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -21,6 +22,7 @@ public class Inventory : MonoBehaviour
     /// <summary> 인벤토리 오브젝트 </summary>
     #endregion
     [SerializeField] private Transform slotParent;
+    [SerializeField] private Transform workroomParent;
 
     #region 인벤토리 슬롯
     /// <summary> 인벤토리 슬롯 (배열) </summary>
@@ -29,6 +31,11 @@ public class Inventory : MonoBehaviour
 
     private int changeSlotIdx;
     public int ChangeIdx => changeSlotIdx;
+
+    [SerializeField] private Transform inventoryParent;
+    [SerializeField] private Transform UIPos;
+    [SerializeField] private Transform UIRot;
+    public UITurotialGuide guide;
 
 
     void Awake()
@@ -51,12 +58,21 @@ public class Inventory : MonoBehaviour
         {
             if (!inventoryActivated)
             {
+                if (_inventoryManager.is1st != true)
+                {
+                    guide.OnTrigger(1);
+                    _inventoryManager.is1st = true;
+                }
+                inventoryParent.position = UIPos.position;
+                inventoryParent.rotation = UIRot.rotation;
                 slotParent.gameObject.SetActive(true);
+                workroomParent.gameObject.SetActive(true);
                 inventoryActivated = true;
             }
             else
             {
                 slotParent.gameObject.SetActive(false);
+                workroomParent.gameObject.SetActive(false);
                 inventoryActivated = false;
             }
         }
