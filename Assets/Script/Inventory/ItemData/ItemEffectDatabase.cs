@@ -22,13 +22,17 @@ public class ItemEffectDatabase : MonoBehaviour
     {
         if (type == ItemType.Weapon)
         {
-            //무기 장착
+            GameObject obj = Resources.Load<GameObject>($"Prefabs/{itemName}");
+            Instantiate(obj);
+            obj.transform.position = objPos.position;
+            Debug.Log($"{obj.transform.position} | {objPos.position}");
         }
         else if (type == ItemType.ETC)
         {
             GameObject obj = Resources.Load<GameObject>($"Prefabs/{itemName}");
             Instantiate(obj);
             obj.transform.position = objPos.position;
+            Debug.Log($"{obj.transform.position} | {objPos.position}");
             //기타 아이템 장착
         }
         //else if (type == ItemType.Consumable)
