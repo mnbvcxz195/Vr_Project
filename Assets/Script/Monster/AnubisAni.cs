@@ -5,6 +5,8 @@ using UnityEngine;
 public class AnubisAni : MonoBehaviour
 {
     [SerializeField] Camera cam;
+    [SerializeField] AudioSource monsfx;
+
     Vector3 camerori;
     public enum State // 몬스터의 상태
     { 
@@ -102,24 +104,22 @@ public class AnubisAni : MonoBehaviour
             {
                 case State.Run:
                     atr.SetBool("IsRun", true);
-                    //Debug.Log("이스런");
                     break;
                 case State.Jump:
                     atr.SetBool("IsJump", true);
-                    //Debug.Log("이스점프");
+                    AudioManager.GetInstance().MonSfxPlay(monsfx, 1,true);
                     break;
                 case State.Attck0:
                     atr.SetBool("IsAttck_0", true);
-                    //Debug.Log("공격1");
-
+                    AudioManager.GetInstance().MonSfxPlay(monsfx, 2, true);
                     break;
                 case State.Attck1:
                     atr.SetBool("IsAttck_1", true);
-                    //Debug.Log("공격2");
+                    AudioManager.GetInstance().MonSfxPlay(monsfx, 3,true);
                     break;
                 case State.Attck2:
                     atr.SetBool("IsAttck_2", true);
-                    //Debug.Log("공격3");
+                    AudioManager.GetInstance().MonSfxPlay(monsfx, 4, true);
                     break;
             }
             yield return new WaitForSeconds(0.3f);
@@ -163,6 +163,7 @@ public class AnubisAni : MonoBehaviour
     {
         if(MonsterManager.GetInstance().Newmonster.MonsterHp <= 0)
         {
+            AudioManager.GetInstance().MonSfxPlay(monsfx, 5, false);
             isDie = true;
             atr.SetBool("IsDie", true);
         }
