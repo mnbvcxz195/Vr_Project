@@ -10,9 +10,4 @@ public class Stage1Scene : MonoBehaviour
         AudioManager.GetInstance().BgmPlay(bgm, 2);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

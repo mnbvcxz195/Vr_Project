@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public enum Scene
 {
     Title,
@@ -34,6 +35,7 @@ public class ScenesManager : MonoBehaviour
 
     #region Scene Control
     public Scene currentScene;
+    Scene curscene;
     public void ChangeScene(Scene scene)
     {
 
@@ -45,10 +47,10 @@ public class ScenesManager : MonoBehaviour
     }
 
     #endregion
-    public void ChangeSceneTutorial()
-    {
-        ChangeScene(Scene.Tutorial);
-    }
 
+    public void SceneReLoad()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
 }

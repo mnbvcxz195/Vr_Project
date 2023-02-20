@@ -18,7 +18,7 @@ public class PlayerJump : MonoBehaviour
 
     private bool onclik = false;
     [SerializeField] GameObject go;
-
+    //GameObject[] Traps;
     private void Start()
     {
         Speed = 5.0f;
@@ -27,6 +27,7 @@ public class PlayerJump : MonoBehaviour
         JumpPow = 3.0f;
         JumpButtonPressed = false;
         SelectPlayer = GetComponent<CharacterController>();
+        //Traps = GameObject.FindGameObjectsWithTag("trap");
 
         // 특정 컨트롤러하나만 가져오는 방법
         List<InputDevice> devices = new List<InputDevice>();
@@ -57,7 +58,7 @@ public class PlayerJump : MonoBehaviour
             //MoveDir = SelectPlayer.transform.TransformDirection(MoveDir);
             // 속도를 곱해서 적용합니다.
             //MoveDir *= Speed;
-            
+
 
             // 스페이스 버튼에 따른 점프 : 최종 점프버튼이 눌려있지 않았던 경우만 작동
             if (JumpButtonPressed == false && primaryButtonValue)
@@ -100,16 +101,28 @@ public class PlayerJump : MonoBehaviour
     }
     void MonsterAttckCheck()
     {
-        if (MonsterManager.GetInstance().Newmonster.MonsterHp > 0)
+        if (go != null)
         {
-            float sss = Vector3.Distance(go.transform.position, gameObject.transform.position);
-            //Debug.Log($"P{sss}");
-            if (sss < 0.8f)
+            if (MonsterManager.GetInstance().Newmonster.MonsterHp > 0)
             {
-                PlayerManager.GetInstance().Damage(40);
-                Debug.Log("칼맞음");
+                float sss = Vector3.Distance(go.transform.position, gameObject.transform.position);
+                if (sss < 0.8f)
+                {
+                    PlayerManager.GetInstance().Damage(40);
+                    Debug.Log("칼맞음");
 
+                }
             }
+        }
+        else
+            return;
+    }
+     void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.GetComponent<Traps>())
+        {
+            PlayerManager.GetInstance().Damage(40);
+            Debug.Log("함정충돌");
         }
     }
 
