@@ -56,5 +56,8 @@ public class MonsterManager : MonoBehaviour
         go.gameObject.SetActive(true);
     }
 
-
+    public void MonsterDie(AudioSource oo)
+    {
+        AudioManager.GetInstance().BgmPlay(oo, 6);
+    }
 }

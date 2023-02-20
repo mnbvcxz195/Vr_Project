@@ -7,6 +7,8 @@ public class AnubisAni : MonoBehaviour
     [SerializeField] Camera cam;
     [SerializeField] AudioSource monsfx;
     [SerializeField] AudioSource monweaponsfx;
+    [SerializeField] AudioSource bgm;
+
 
 
     Vector3 camerori;
@@ -167,6 +169,7 @@ public class AnubisAni : MonoBehaviour
         if(MonsterManager.GetInstance().Newmonster.MonsterHp <= 0)
         {
             AudioManager.GetInstance().MonSfxPlay(monsfx, 5, false);
+            MonsterManager.GetInstance().MonsterDie(bgm);
             isDie = true;
             atr.SetBool("IsDie", true);
         }
