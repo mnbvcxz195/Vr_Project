@@ -10,6 +10,7 @@ public class ObjItem : MonoBehaviour
     #endregion
     [SerializeField] private ItemType type;
     [SerializeField] private int itemIdx;
+    Inventory _Inventory;
 
     ItemBase item;
 
@@ -18,6 +19,7 @@ public class ObjItem : MonoBehaviour
         //inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
 
         item = scriptableItem.GetItemList(type)[itemIdx];  //아이템 지정
+        _Inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
 
     }
 
@@ -32,5 +34,15 @@ public class ObjItem : MonoBehaviour
     {
         InventoryManager.GetInstance().AcquireItem(item);
         gameObject.SetActive(false);
+    }
+    public void Throwaway()
+    {
+        Debug.Log($"버림");
+        _Inventory.Throwaway();
+        Invoke("DestroyGo", 5f);
+    }
+    public void DestroyGo()
+    {
+        Destroy(this.gameObject);
     }
 }

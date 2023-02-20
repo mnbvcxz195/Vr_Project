@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using static UnityEditor.PlayerSettings;
 
 [System.Serializable]
 public class ItemEffect
@@ -14,46 +16,43 @@ public class ItemEffectDatabase : MonoBehaviour
 {
     [SerializeField]
     private ItemEffect[] itemEffect;
-    [SerializeField] private Transform objPos;
 
     private const string HP = "HP";
 
+    XRRayInteractor ryInteractor;
+    XRGrabInteractable grabInteractable;
+    GameObject objWeapon;
+    GameObject objETC;
+
+    private void Start()
+    {
+        ryInteractor = GameObject.FindWithTag("Player").GetComponentsInChildren<XRRayInteractor>()[1];
+    }
+
+    [System.Obsolete]
     public void UseItemEffect(ItemType type, string itemName)
     {
         if (type == ItemType.Weapon)
         {
+            if (objWeapon != null)
+                Destroy(objWeapon);
+
             GameObject obj = Resources.Load<GameObject>($"Prefabs/{itemName}");
-            Instantiate(obj);
-            obj.transform.position = objPos.position;
-            Debug.Log($"{obj.transform.position} | {objPos.position}");
+            objWeapon = Instantiate(obj);
+            grabInteractable = objWeapon.GetComponent<XRGrabInteractable>();
+            ryInteractor.interactionManager.SelectEnter(ryInteractor, grabInteractable);
         }
+
         else if (type == ItemType.ETC)
         {
+            if (objWeapon != null)
+                Destroy(objWeapon);
+
             GameObject obj = Resources.Load<GameObject>($"Prefabs/{itemName}");
-            Instantiate(obj);
-            obj.transform.position = objPos.position;
-            Debug.Log($"{obj.transform.position} | {objPos.position}");
-            //기타 아이템 장착
+            objETC = Instantiate(obj);
+            grabInteractable = objETC.GetComponent<XRGrabInteractable>();
+            ryInteractor.interactionManager.SelectEnter(ryInteractor, grabInteractable);
         }
-        //else if (type == ItemType.Consumable)
-        //{
-        //    //아이템 사용
-        //    for (int i = 0; i < itemEffect.Length; i++)
-        //    {
-        //        if (itemEffect[i].itemName == itemName)
-        //        {
-        //            switch (itemEffect[i].effectPart)
-        //            {
-        //                case HP:
-        //                    PlayerManager.GetInstance().healhp(itemEffect[i].effectValue);
-        //                    Debug.Log($"{itemEffect[i].effectPart} +{itemEffect[i].effectValue}");
-        //                    break;
-        //            }
-        //            Debug.Log($"{itemName}을 사용했습니다.");
-        //            return;
-        //        }
-        //    }
-        //}
         else
             Debug.Log($"장비 / 기타 아이템이 아님");
     }
@@ -77,8 +76,4 @@ public class ItemEffectDatabase : MonoBehaviour
             }
         }
     }
-
-
-    //ItemEffectDatabase itemEffectDatabase;
-    //itemEffectDatabase.UseItemEffect(itemType, _item.ItemName);
 }
