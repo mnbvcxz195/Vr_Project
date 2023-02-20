@@ -6,6 +6,8 @@ public class AnubisAni : MonoBehaviour
 {
     [SerializeField] Camera cam;
     [SerializeField] AudioSource monsfx;
+    [SerializeField] AudioSource monweaponsfx;
+
 
     Vector3 camerori;
     public enum State // 몬스터의 상태
@@ -21,7 +23,7 @@ public class AnubisAni : MonoBehaviour
     [SerializeField] Animator atr;
     [SerializeField] GameObject pla;
 
-    public int speed = 1;
+    public float speed = 1;
     public float traceDist = 15f; //플레이어 추적범위 넘어가면 점프애니메이션발동
     public float MonAttck = 3f; //몬스터가 공격을할수있는범위
     public bool isDie = false;
@@ -35,6 +37,7 @@ public class AnubisAni : MonoBehaviour
 
         StartCoroutine(CheckMonState());
         StartCoroutine(MonsterAction());
+
     }
     void Update()
     {
@@ -45,9 +48,9 @@ public class AnubisAni : MonoBehaviour
             case State.Jump:
                 if (atr.GetCurrentAnimatorStateInfo(0).IsName("jump"))
                 {
-                    MonsterMove(6);
+                    MonsterMove(speed*6);
                 }
-                MonsterMove(1);
+                MonsterMove(speed*2);
                 break;
         }
     }
@@ -138,7 +141,7 @@ public class AnubisAni : MonoBehaviour
         }
         cam.transform.localPosition = camerori;
     }
-    void MonsterMove(int i) //몬스터가 플레이어를 추적하겠금
+    void MonsterMove(float i) //몬스터가 플레이어를 추적하겠금
     {
         if(!isDie && MonsterManager.GetInstance().battle)
         {
