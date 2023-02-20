@@ -19,14 +19,16 @@ public class ItemEffectDatabase : MonoBehaviour
 
     private const string HP = "HP";
 
-    XRRayInteractor ryInteractor;
-    XRGrabInteractable grabInteractable;
+    //XRRayInteractor ryInteractor;
+    public XRDirectInteractor drInteractor;
+    public XRGrabInteractable grabInteractable;
     GameObject objWeapon;
     GameObject objETC;
 
     private void Start()
     {
-        ryInteractor = GameObject.FindWithTag("Player").GetComponentsInChildren<XRRayInteractor>()[1];
+        //ryInteractor = GameObject.FindWithTag("Player").GetComponentsInChildren<XRRayInteractor>()[1];
+        drInteractor = GameObject.FindWithTag("Player").GetComponentsInChildren<XRDirectInteractor>()[1];
     }
 
     [System.Obsolete]
@@ -40,7 +42,10 @@ public class ItemEffectDatabase : MonoBehaviour
             GameObject obj = Resources.Load<GameObject>($"Prefabs/{itemName}");
             objWeapon = Instantiate(obj);
             grabInteractable = objWeapon.GetComponent<XRGrabInteractable>();
-            ryInteractor.interactionManager.SelectEnter(ryInteractor, grabInteractable);
+            Debug.Log($"{objWeapon}");
+            //ryInteractor.interactionManager.SelectEnter(ryInteractor, grabInteractable);
+
+            drInteractor.interactionManager.SelectEnter(drInteractor, grabInteractable);
         }
 
         else if (type == ItemType.ETC)
@@ -51,7 +56,10 @@ public class ItemEffectDatabase : MonoBehaviour
             GameObject obj = Resources.Load<GameObject>($"Prefabs/{itemName}");
             objETC = Instantiate(obj);
             grabInteractable = objETC.GetComponent<XRGrabInteractable>();
-            ryInteractor.interactionManager.SelectEnter(ryInteractor, grabInteractable);
+            Debug.Log($"{objETC}");
+            //ryInteractor.interactionManager.SelectEnter(ryInteractor, grabInteractable);
+            drInteractor.interactionManager.SelectEnter(drInteractor, grabInteractable);
+            Debug.Log($"dd");
         }
         else
             Debug.Log($"장비 / 기타 아이템이 아님");

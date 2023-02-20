@@ -59,6 +59,7 @@ public class ItemCombination : MonoBehaviour
     {
         _Inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
         _InventoryManager = InventoryManager.GetInstance();
+        _InventoryManager.AcquireItem(_ScriptableItem.GetItemList(ItemType.Weapon)[0]);
     }
     public void Combination(ItemType type, int code)
     {
