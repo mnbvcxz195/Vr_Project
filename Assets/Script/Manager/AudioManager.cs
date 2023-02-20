@@ -54,6 +54,13 @@ public class AudioManager : MonoBehaviour
         monsfx.loop = loop;
 
     }
+    public void PlayerSfxPlay(AudioSource playersfx, int a)
+    {
+        playersfx.clip = playerAudioList[a];
+        playersfx.Play();
+        playersfx.pitch = 2;
+
+    }
 
     public void InitSounds()
     {
@@ -62,6 +69,9 @@ public class AudioManager : MonoBehaviour
         AudioClip[] sfx = Resources.LoadAll<AudioClip>($"Audio/Sfx");
 
         AudioClip[] Monsfx = Resources.LoadAll<AudioClip>($"Audio/Monster");
+
+        AudioClip[] PlayerSfx = Resources.LoadAll<AudioClip>($"Audio/PlayerSfx");
+
 
 
 
@@ -76,6 +86,10 @@ public class AudioManager : MonoBehaviour
         for (int i = 0; i < Monsfx.Length; i++)
         {
             monAudioList.Add(Monsfx[i]);
+        }
+        for (int i = 0; i < PlayerSfx.Length; i++)
+        {
+            playerAudioList.Add(PlayerSfx[i]);
         }
 
     }
