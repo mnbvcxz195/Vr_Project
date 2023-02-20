@@ -21,7 +21,7 @@ public class UIPlayer : MonoBehaviour
     {
         hpPlayer.value = PlayerManager.GetInstance().Newplayer.PlayerHp;
         hpMonster.value = MonsterManager.GetInstance().Newmonster.MonsterHp;
-
+        //1
     }
 
     void Update()
