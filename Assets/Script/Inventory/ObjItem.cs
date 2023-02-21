@@ -11,7 +11,7 @@ public class ObjItem : MonoBehaviour
     [SerializeField] private ItemType type;
     [SerializeField] private int itemIdx;
     Inventory _Inventory;
-    PlayerJump _player;
+    public PlayerJump _player;
     ItemBase item;
 
     void Awake()
