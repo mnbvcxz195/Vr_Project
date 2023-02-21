@@ -58,6 +58,7 @@ public class AudioManager : MonoBehaviour
     {
         playersfx.clip = playerAudioList[a];
         playersfx.Play();
+        playersfx.pitch = 2;
 
     }
 
