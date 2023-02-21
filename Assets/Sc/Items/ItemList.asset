@@ -61,7 +61,7 @@ MonoBehaviour:
     itemPrefab: {fileID: 4501425015709686415, guid: 347ba2c9860e2d444806acd74cc47c85, type: 3}
   - itemIdx: 18
     itemName: "\uD654\uC57D"
-    itemImage: {fileID: 21300000, guid: 601e54c2aa5e79942b8de3f53c788195, type: 3}
+    itemImage: {fileID: 21300000, guid: 7df7640b44e9430419c53ef929cd20a2, type: 3}
     itemPrefab: {fileID: 4807627102336942223, guid: 516ca2904b5ccab448fe45081ba1f3f0, type: 3}
   - itemIdx: 19
     itemName: "\uCD1D\uC54C"
