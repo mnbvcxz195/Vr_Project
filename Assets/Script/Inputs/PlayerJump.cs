@@ -18,16 +18,17 @@ public class PlayerJump : MonoBehaviour
 
     private bool onclik = false;
     [SerializeField] GameObject go;
+    [SerializeField] public AudioSource PlayerSfx;
+    int randam;
     //GameObject[] Traps;
     private void Start()
     {
         Speed = 5.0f;
-        Gravity = 10.0f;
+        Gravity = 5.0f;
         MoveDir = Vector3.zero;
         JumpPow = 3.0f;
         JumpButtonPressed = false;
         SelectPlayer = GetComponent<CharacterController>();
-        //Traps = GameObject.FindGameObjectsWithTag("trap");
 
         // 특정 컨트롤러하나만 가져오는 방법
         List<InputDevice> devices = new List<InputDevice>();
@@ -37,6 +38,8 @@ public class PlayerJump : MonoBehaviour
 
         if (devices.Count > 0)
             targetDevice = devices[0];
+        PlayerSfx = GetComponent<AudioSource>();
+        randam = Random.Range(0, 3);
     }
 
     private void Update()
@@ -109,6 +112,7 @@ public class PlayerJump : MonoBehaviour
                 if (sss < 0.8f)
                 {
                     PlayerManager.GetInstance().Damage(40);
+                    AudioManager.GetInstance().PlayerSfxPlay(PlayerSfx, randam);
                     Debug.Log("칼맞음");
 
                 }
@@ -122,6 +126,8 @@ public class PlayerJump : MonoBehaviour
         if (hit.gameObject.GetComponent<Traps>())
         {
             PlayerManager.GetInstance().Damage(40);
+            AudioManager.GetInstance().PlayerSfxPlay(PlayerSfx, randam);
+
             Debug.Log("함정충돌");
         }
     }
