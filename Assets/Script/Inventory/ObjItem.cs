@@ -16,7 +16,6 @@ public class ObjItem : MonoBehaviour
 
     void Awake()
     {
-        //inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
 
         item = scriptableItem.GetItemList(type)[itemIdx];  //아이템 지정
         _Inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
