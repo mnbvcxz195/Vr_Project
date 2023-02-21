@@ -68,5 +68,9 @@ public class PlayerManager : MonoBehaviour
         demegeImg.DOFade(0, 0.5f).SetDelay(0.5f);
 
     }
+    public void itemPickUpSound(AudioSource playersfx)
+    {
+        AudioManager.GetInstance().PlayerSfxPlay(playersfx, 3);
+    }
 
 }

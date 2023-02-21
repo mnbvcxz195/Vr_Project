@@ -11,7 +11,7 @@ public class ObjItem : MonoBehaviour
     [SerializeField] private ItemType type;
     [SerializeField] private int itemIdx;
     Inventory _Inventory;
-
+    PlayerJump _player;
     ItemBase item;
 
     void Awake()
@@ -20,7 +20,7 @@ public class ObjItem : MonoBehaviour
 
         item = scriptableItem.GetItemList(type)[itemIdx];  //아이템 지정
         _Inventory = GameObject.FindWithTag("Inventory").GetComponent<Inventory>();
-
+        _player = GameObject.FindWithTag("Player").GetComponent<PlayerJump>();
     }
 
     /// <summary> 아이템 정보 </summary>
@@ -32,6 +32,7 @@ public class ObjItem : MonoBehaviour
     /// <summary> 아이템 획득 </summary>
     public void PickUp()
     {
+        PlayerManager.GetInstance().itemPickUpSound(_player.PlayerSfx);
         InventoryManager.GetInstance().AcquireItem(item);
         gameObject.SetActive(false);
     }

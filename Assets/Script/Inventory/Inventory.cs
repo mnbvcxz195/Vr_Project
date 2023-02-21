@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 using static UnityEditor.Progress;
 
@@ -30,6 +31,8 @@ public class Inventory : MonoBehaviour
     #endregion
     [SerializeField] private UISlot[] slots;
 
+    private InputDevice targetDevice;
+
     private int changeSlotIdx;
     public int ChangeIdx => changeSlotIdx;
 
@@ -48,6 +51,16 @@ public class Inventory : MonoBehaviour
         
         slots = slotParent.GetComponentsInChildren<UISlot>();
     }
+    private void Start()
+    {
+        List<InputDevice> devices = new List<InputDevice>();
+        InputDeviceCharacteristics rightControllerCharacteristics =
+            InputDeviceCharacteristics.Right | InputDeviceCharacteristics.Controller;
+        InputDevices.GetDevicesWithCharacteristics(rightControllerCharacteristics, devices);
+
+        if (devices.Count > 0)
+            targetDevice = devices[0];
+    }
 
     private void Update()
     {
@@ -57,7 +70,9 @@ public class Inventory : MonoBehaviour
     /// <summary> 인벤토리 오픈 관리 </summary>
     private void OpenInventory()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        targetDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out bool secondaryButtonValue);
+
+        if (secondaryButtonValue)
         {
             if (!inventoryActivated)
             {
