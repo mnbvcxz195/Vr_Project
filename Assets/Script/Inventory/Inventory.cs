@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
@@ -11,7 +12,7 @@ public class Inventory : MonoBehaviour
     #region 인벤토리 활성화 여부
     /// <summary> 인벤토리 활성화 여부 </summary>
     #endregion
-    private bool inventoryActivated;
+    public bool inventoryActivated;
 
     #region 인벤토리 매니저
     /// <summary> 인벤토리 매니저 </summary>
@@ -37,6 +38,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Transform UIRot;
     public UITurotialGuide guide;
 
+    public XRRayInteractor ryInteractor;
+    public XRDirectInteractor drInteractor;
 
     void Awake()
     {
@@ -67,12 +70,16 @@ public class Inventory : MonoBehaviour
                 inventoryParent.rotation = UIRot.rotation;
                 slotParent.gameObject.SetActive(true);
                 workroomParent.gameObject.SetActive(true);
+                drInteractor.gameObject.SetActive(false);
+                ryInteractor.gameObject.SetActive(true);
                 inventoryActivated = true;
             }
             else
             {
                 slotParent.gameObject.SetActive(false);
                 workroomParent.gameObject.SetActive(false);
+                ryInteractor.gameObject.SetActive(false);
+                drInteractor.gameObject.SetActive(true);
                 inventoryActivated = false;
             }
         }
@@ -112,6 +119,16 @@ public class Inventory : MonoBehaviour
             slots[_inventoryManager.Items[_inventoryManager.preUse][_inventoryManager._preIdx].itemPosition].SetEquipColor(1);
         if (_inventoryManager._curIdx < 10)
             slots[_inventoryManager.Items[_inventoryManager.curUse][_inventoryManager._curIdx].itemPosition].SetEquipColor(0.5f);
+    }
+
+    public void Throwaway()
+    {
+        slots[_inventoryManager.Items[_inventoryManager.curUse][_inventoryManager._curIdx].itemPosition].SetEquipColor(1f);
+
+        _inventoryManager.Items[_inventoryManager.curUse][_inventoryManager._curIdx].use = false;
+        _inventoryManager._curIdx = 10;
+        _inventoryManager.curEquip = true;
+        Debug.Log($"{_inventoryManager._curIdx}");
     }
 
     public void SpendSelectItem(int idx, int count)
