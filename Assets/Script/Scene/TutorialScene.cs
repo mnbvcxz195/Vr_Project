@@ -5,7 +5,6 @@ using UnityEngine;
 public class TutorialScene : MonoBehaviour
 {
     [SerializeField] AudioSource bgm;
-
     void Start()
     {
         AudioManager.GetInstance().BgmPlay(bgm, 1);

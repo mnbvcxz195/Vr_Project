@@ -24,7 +24,7 @@ public class PlayerJump : MonoBehaviour
     private void Start()
     {
         Speed = 5.0f;
-        Gravity = 5.0f;
+        Gravity = 1;
         MoveDir = Vector3.zero;
         JumpPow = 3.0f;
         JumpButtonPressed = false;
