@@ -8,6 +8,5 @@ public class TutorialScene : MonoBehaviour
     void Start()
     {
         AudioManager.GetInstance().BgmPlay(bgm, 1);
-
     }
 }
