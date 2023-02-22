@@ -83,9 +83,9 @@ public class PlayerJump : MonoBehaviour
         // 점프버튼이 눌려지지 않은 경우
         if (!primaryButtonValue)
         {
-            Debug.Log("JumpButtonPressed true3" + JumpButtonPressed);
+            //Debug.Log("JumpButtonPressed true3" + JumpButtonPressed);
             JumpButtonPressed = false;  // 최종점프 버튼 눌림 상태 해제
-            Debug.Log("JumpButtonPressed false4" + JumpButtonPressed);
+            //Debug.Log("JumpButtonPressed false4" + JumpButtonPressed);
 
         }
         // 앞 단계까지는 캐릭터가 이동할 방향만 결정하였으며,
