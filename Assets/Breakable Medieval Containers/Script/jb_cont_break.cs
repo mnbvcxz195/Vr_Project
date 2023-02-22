@@ -12,7 +12,6 @@ public class jb_cont_break : MonoBehaviour
     private void Awake()
     {
 		Item.gameObject.SetActive(false);
-
 	}
     public void GrapoBj () 
     {
