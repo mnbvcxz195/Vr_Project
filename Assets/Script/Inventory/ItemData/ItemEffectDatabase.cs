@@ -43,10 +43,8 @@ public class ItemEffectDatabase : MonoBehaviour
 
             GameObject obj = Resources.Load<GameObject>($"Prefabs/{itemName}");
             objWeapon = Instantiate(obj);
-            DontDestroyOnLoad(objWeapon);
+            //DontDestroyOnLoad(objWeapon);
             grabInteractable = objWeapon.GetComponent<XRGrabInteractable>();
-            Debug.Log($"{objWeapon}");
-            //ryInteractor.interactionManager.SelectEnter(ryInteractor, grabInteractable);
 
             drInteractor.interactionManager.SelectEnter(drInteractor, grabInteractable);
         }
@@ -59,8 +57,7 @@ public class ItemEffectDatabase : MonoBehaviour
             GameObject obj = Resources.Load<GameObject>($"Prefabs/{itemName}");
             objETC = Instantiate(obj);
             grabInteractable = objETC.GetComponent<XRGrabInteractable>();
-            Debug.Log($"{objETC}");
-            //ryInteractor.interactionManager.SelectEnter(ryInteractor, grabInteractable);
+
             drInteractor.interactionManager.SelectEnter(drInteractor, grabInteractable);
             Debug.Log($"dd");
         }

@@ -19,8 +19,8 @@ public class OnTriggerF : MonoBehaviour
     private void Start()
     {
         scenesManager = ScenesManager.GetInstance();
-        DontDestroyOnLoad(PL);
-        DontDestroyOnLoad(IV);
+        //DontDestroyOnLoad(PL);
+        //DontDestroyOnLoad(IV);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,7 +31,7 @@ public class OnTriggerF : MonoBehaviour
             AudioManager.GetInstance().SfxPlay(breakSound, 2);
             Debug.Log($"튜토리얼이 종료되었습니다.");
             Invoke("ToStage1", 1f);
-            Invoke("goScene1", 8f);
+            Invoke("goScene1", 5f);
             FadeIn();
         }
     }

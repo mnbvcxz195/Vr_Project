@@ -114,7 +114,7 @@ public class InventoryManager : MonoBehaviour
     string filename = "save.text";
 
     public ItemCombination _ItemCombination;
-    ItemEffectDatabase itemEffectDatabase;
+    public ItemEffectDatabase itemEffectDatabase;
 
     public delegate void ItemUpdateHandler(Item item);
     public event ItemUpdateHandler OnItemAddHandler;
@@ -140,6 +140,8 @@ public class InventoryManager : MonoBehaviour
 
         //SaveData();
     }
+
+
 
     /// <summary> 아이템 획득 </summary>
     public void AcquireItem(ItemBase item, int _count = 1)
