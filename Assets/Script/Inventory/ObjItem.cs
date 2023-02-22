@@ -38,6 +38,7 @@ public class ObjItem : MonoBehaviour
     {
         PlayerManager.GetInstance().itemPickUpSound(_player.PlayerSfx);
         InventoryManager.GetInstance().AcquireItem(item);
+        Debug.Log($"{item.ItemName} È¹µæ");
         gameObject.SetActive(false);
     }
     public void Throwaway()

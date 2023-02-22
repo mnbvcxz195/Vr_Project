@@ -12,9 +12,15 @@ public class OnTriggerF : MonoBehaviour
     public GameObject bossRoom2;
     public AudioSource breakSound;
     public Image fadein;
+
+    public GameObject PL;
+    public GameObject IV;
+
     private void Start()
     {
         scenesManager = ScenesManager.GetInstance();
+        DontDestroyOnLoad(PL);
+        DontDestroyOnLoad(IV);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,7 +31,7 @@ public class OnTriggerF : MonoBehaviour
             AudioManager.GetInstance().SfxPlay(breakSound, 2);
             Debug.Log($"튜토리얼이 종료되었습니다.");
             Invoke("ToStage1", 1f);
-            Invoke("goScene1", 5f);
+            Invoke("goScene1", 8f);
             FadeIn();
         }
     }
@@ -37,7 +43,8 @@ public class OnTriggerF : MonoBehaviour
     }
     void goScene1()
     {
-        ScenesManager.GetInstance().ChangeScene(Scene.Stage1);
+        scenesManager.ChangeScene(Scene.Stage1);
+        Debug.Log($"이동");
     }
     void FadeIn()
     {

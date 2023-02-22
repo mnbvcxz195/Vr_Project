@@ -27,8 +27,10 @@ public class ItemEffectDatabase : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log($"ItemEffectDatabase Ω√¿€");
         //ryInteractor = GameObject.FindWithTag("Player").GetComponentsInChildren<XRRayInteractor>()[1];
         drInteractor = GameObject.FindWithTag("Player").GetComponentsInChildren<XRDirectInteractor>()[1];
+
     }
 
     [System.Obsolete]
@@ -41,6 +43,7 @@ public class ItemEffectDatabase : MonoBehaviour
 
             GameObject obj = Resources.Load<GameObject>($"Prefabs/{itemName}");
             objWeapon = Instantiate(obj);
+            DontDestroyOnLoad(objWeapon);
             grabInteractable = objWeapon.GetComponent<XRGrabInteractable>();
             Debug.Log($"{objWeapon}");
             //ryInteractor.interactionManager.SelectEnter(ryInteractor, grabInteractable);
