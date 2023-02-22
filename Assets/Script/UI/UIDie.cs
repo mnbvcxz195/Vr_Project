@@ -8,15 +8,17 @@ public class UIDie : MonoBehaviour
 {
     public Button restart;
     [SerializeField] AudioSource Diesound;
+
     void Start()
     {
-        AudioManager.GetInstance().BgmPlay(Diesound, 5);
+        //AudioManager.GetInstance().BgmPlay(Diesound, 5);
         restart = GetComponentInChildren<Button>();
         restart.onClick.AddListener(SceneReLoad);
     }
 
     void SceneReLoad()
     {
+        // ScenesManager.GetInstance().ChangeScene(Scene.Stage1);
         ScenesManager.GetInstance().SceneReLoad();
     }
 }

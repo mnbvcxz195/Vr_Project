@@ -9,6 +9,8 @@ public class OnSocketS1 : MonoBehaviour
     public Animator stoneAmimL;
     public Animator stoneAmimR;
     string keyName;
+    public AudioSource breakSound;
+
 
     void Start()
     {
@@ -22,6 +24,8 @@ public class OnSocketS1 : MonoBehaviour
             Debug.Log($"맞음");
             stoneAmimL.SetTrigger("OpenT");
             stoneAmimR.SetTrigger("OpenT");
+            AudioManager.GetInstance().SfxPlay(breakSound, 1);
+
         }
         else
             Debug.Log($"틀림");

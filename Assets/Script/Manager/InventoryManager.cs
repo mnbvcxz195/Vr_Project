@@ -131,14 +131,14 @@ public class InventoryManager : MonoBehaviour
         foreach (ItemType type in Enum.GetValues(typeof(ItemType)))
             Items.Add(type, new ItemList());
 
-        LoadData();
+        //LoadData();
 
         for (int i = 0; i < _inventoryCount; i++)
             _itemPosition.Push(i);
         _ItemCombination = GameObject.FindWithTag("ItemCombination").GetComponent<ItemCombination>();//인벤토리 찾아주기
         itemEffectDatabase = GameObject.FindWithTag("Database").GetComponent<ItemEffectDatabase>();
 
-        SaveData();
+        //SaveData();
     }
 
     /// <summary> 아이템 획득 </summary>
@@ -176,7 +176,7 @@ public class InventoryManager : MonoBehaviour
         else
             Debug.Log($"꽉참");
 
-        SaveData();
+        //SaveData();
     }
 
     public int mixItem1;

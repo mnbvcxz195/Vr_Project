@@ -74,7 +74,7 @@ public class AnubisAni : MonoBehaviour
             CameraShake();
 
             float distance = Vector3.Distance(pla.transform.position, transform.position);
-            Debug.Log($"{distance}");
+            //Debug.Log($"{distance}");
             if(distance <= MonAttck)
             {
                 int random = Random.Range(0, 3);
