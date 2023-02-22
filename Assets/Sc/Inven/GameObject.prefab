@@ -632,7 +632,7 @@ MonoBehaviour:
   itemEffect:
   - itemName: "\uD3EC\uC158"
     effectPart: HP
-    effectValue: 10
+    effectValue: 35
   drInteractor: {fileID: 0}
   grabInteractable: {fileID: 0}
 --- !u!1 &746276976027792256
