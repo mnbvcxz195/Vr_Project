@@ -45,7 +45,6 @@ public class AudioManager : MonoBehaviour
     {
         sfx.clip = sfxList[a];
         sfx.Play();
-        sfx.pitch = 2;
     }
     public void MonSfxPlay(AudioSource monsfx, int a,bool loop)
     {
@@ -58,7 +57,6 @@ public class AudioManager : MonoBehaviour
     {
         playersfx.clip = playerAudioList[a];
         playersfx.Play();
-        playersfx.pitch = 2;
 
     }
 
