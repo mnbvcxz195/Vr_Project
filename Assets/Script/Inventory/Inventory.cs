@@ -72,15 +72,15 @@ public class Inventory : MonoBehaviour
     {
         targetDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out bool secondaryButtonValue);
 
-        if (secondaryButtonValue)
+        if (secondaryButtonValue || Input.GetKeyDown(KeyCode.L))
         {
             if (!inventoryActivated)
             {
-                if (_inventoryManager.is1st != true)
-                {
-                    guide.OnTrigger(1);
-                    _inventoryManager.is1st = true;
-                }
+                //if (_inventoryManager.is1st != true)
+                //{
+                //    guide.OnTrigger(1);
+                //    _inventoryManager.is1st = true;
+                //}
                 inventoryParent.position = UIPos.position;
                 inventoryParent.rotation = UIRot.rotation;
                 slotParent.gameObject.SetActive(true);

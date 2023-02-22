@@ -117,7 +117,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5b0559ab1669a474dae8c795eccb4f83, type: 3}
-    m_FontSize: 59
+    m_FontSize: 57
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
@@ -339,6 +339,8 @@ MonoBehaviour:
   txtGuide: {fileID: 46933529232516474}
   txtGuide2: {fileID: 6952848295753298988}
   btnConfirm: {fileID: 46933529726028228}
+  ryInteractor: {fileID: 0}
+  drInteractor: {fileID: 0}
   inventoryParent: {fileID: 46933529772568391}
   UIPos: {fileID: 0}
   UIRot: {fileID: 0}
@@ -631,6 +633,8 @@ MonoBehaviour:
   - itemName: "\uD3EC\uC158"
     effectPart: HP
     effectValue: 10
+  drInteractor: {fileID: 0}
+  grabInteractable: {fileID: 0}
 --- !u!1 &746276976027792256
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,6 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a3e2cbbe48b5e46a09dfababe1b819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryActivated: 0
   slotParent: {fileID: 746276976027791999}
   workroomParent: {fileID: 4229637951707368207}
   slots:
@@ -819,6 +824,8 @@ MonoBehaviour:
   UIPos: {fileID: 0}
   UIRot: {fileID: 0}
   guide: {fileID: 46933529519461087}
+  ryInteractor: {fileID: 0}
+  drInteractor: {fileID: 0}
 --- !u!1 &991259957866599082
 GameObject:
   m_ObjectHideFlags: 0
@@ -4348,7 +4355,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5b0559ab1669a474dae8c795eccb4f83, type: 3}
-    m_FontSize: 59
+    m_FontSize: 57
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
