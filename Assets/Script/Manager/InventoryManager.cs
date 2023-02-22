@@ -1,8 +1,73 @@
 ﻿using System;
+using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 using static UnityEditor.Progress;
+
+[Serializable]
+public class Serialization<TKey, Tvalue> : ISerializationCallbackReceiver
+{
+    [SerializeField]
+    List<TKey> keys;
+    [SerializeField]
+    List<Tvalue> values;
+
+    Dictionary<TKey, Tvalue> target;
+    public Dictionary<TKey, Tvalue> ToDictionary() { return target; }
+
+    public Serialization()
+    {
+        keys = new List<TKey>();
+        values = new List<Tvalue>();
+    }
+
+    public Serialization(Dictionary<TKey, Tvalue> target)
+    {
+        this.target = target;
+
+        keys = new List<TKey>(target.Keys);
+        values = new List<Tvalue>(target.Values);
+    }
+
+    public void Add(TKey key, Tvalue value)
+    {
+        keys.Add(key);
+        values.Add(value);
+    }
+
+    public void OnBeforeSerialize()
+    {
+        Debug.Log("target : " + target);
+        Debug.Log("key : " + keys);
+        Debug.Log("value : " + values);
+        Debug.Log("OnBeforeSerialize");
+    }
+
+    public void OnAfterDeserialize()
+    {
+        Debug.Log("target : " + target);
+        Debug.Log("key : " + keys);
+        Debug.Log("value : " + values);
+
+        var count = Mathf.Min(keys.Count, values.Count);
+        target = new Dictionary<TKey, Tvalue>(count);
+
+        Debug.Log("target00 : " + target);
+        for (var i = 0; i < count; ++i)
+        {
+            target.Add(keys[i], values[i]);
+        }
+
+        Debug.Log("OnAfterDeserialize");
+    }
+
+    public IEnumerator GetEnumerator()
+    {
+        throw new NotImplementedException();
+    }
+}
 
 public class ItemList : Dictionary<int, Item> { }
 
@@ -45,7 +110,8 @@ public class InventoryManager : MonoBehaviour
     public bool key;
     public bool is1st;
 
-
+    string path;
+    string filename = "save.text";
 
     public ItemCombination _ItemCombination;
     ItemEffectDatabase itemEffectDatabase;
@@ -58,16 +124,21 @@ public class InventoryManager : MonoBehaviour
     
     private void Awake()
     {
+        path = Application.persistentDataPath + "/";
+
         Items = new Dictionary<ItemType, ItemList>();
         
         foreach (ItemType type in Enum.GetValues(typeof(ItemType)))
             Items.Add(type, new ItemList());
-        
+
+        LoadData();
+
         for (int i = 0; i < _inventoryCount; i++)
             _itemPosition.Push(i);
         _ItemCombination = GameObject.FindWithTag("ItemCombination").GetComponent<ItemCombination>();//인벤토리 찾아주기
         itemEffectDatabase = GameObject.FindWithTag("Database").GetComponent<ItemEffectDatabase>();
 
+        SaveData();
     }
 
     /// <summary> 아이템 획득 </summary>
@@ -104,6 +175,8 @@ public class InventoryManager : MonoBehaviour
         }
         else
             Debug.Log($"꽉참");
+
+        SaveData();
     }
 
     public int mixItem1;
@@ -192,6 +265,7 @@ public class InventoryManager : MonoBehaviour
     /// <summary> 아이템 사용 </summary>
     public void UseItem(ItemType type, int idx)
     {
+        Debug.Log($"{type} | {idx}");
         var itemList = Items[type];
 
         if (type == ItemType.Weapon || type == ItemType.ETC)
@@ -226,6 +300,21 @@ public class InventoryManager : MonoBehaviour
                     Debug.Log($"[{itemList[idx].item.ItemName}] 아이템을 장착하였습니다.");
                     itemEffectDatabase.UseItemEffect(type, itemList[idx].item.ItemName);
                     curEquip = false;
+                }
+
+                if (type == ItemType.ETC)
+                {
+                    var count = itemList[idx].SetItemCount(-1);
+                    test = itemList[idx].itemCount;
+                    itemList[idx].use = false;
+                    Equip = false;
+                    if (count <= 0)
+                    {
+                        _itemPosition.Push(itemList[idx].itemPosition);
+                        itemList.Remove(idx);
+                    }
+                    _curIdx = 10;
+                    curEquip = true;
                 }
             }
             else
@@ -282,5 +371,38 @@ public class InventoryManager : MonoBehaviour
     public int CurSlot()
     {
         return test;
+    }
+
+    public void SaveData()
+    {
+
+        var serializedDictionary = new Serialization<ItemType, Serialization<int, Item>>();
+        foreach (var item in Items)
+            serializedDictionary.Add(item.Key, new Serialization<int, Item>(item.Value));
+
+        var myItemData = JsonUtility.ToJson(serializedDictionary);
+        File.WriteAllText(path + filename, myItemData);
+        Debug.Log(myItemData);
+        Debug.Log("저장");
+    }
+
+    public void LoadData()
+    {
+        var myItemData = File.ReadAllText(path + filename);
+        var SerializedData = JsonUtility.FromJson<Serialization<ItemType, Serialization<int, Item>>>(myItemData).ToDictionary();
+
+        Items = new Dictionary<ItemType, ItemList>();
+        foreach (var data in SerializedData)
+        {
+            var itemDictionary = data.Value.ToDictionary();
+            var itemList = new ItemList();
+            foreach (var itemData in itemDictionary)
+                itemList.Add(itemData.Key, itemData.Value);
+
+            Items.Add(data.Key, itemList);
+        }
+
+        Debug.Log(myItemData);
+        Debug.Log("로드");
     }
 }
