@@ -428,7 +428,6 @@ MonoBehaviour:
     m_Bits: 128
   gunClipSFX: {fileID: 8300000, guid: a95f2fc2c5d36654e9155657e647b1b1, type: 3}
   hitGraphic: {fileID: 4492466673357890097, guid: d4b35904bba19b14a96d58eae7275442, type: 3}
-  gunShotGraphic: {fileID: 6243426927915946256}
   gunShotPos: {fileID: 4331489728714543033, guid: bab740aa2f8f6a541bdacfe80dbc31f4, type: 3}
   casingSpawnPoint: {fileID: 6243426927887921724}
   handleColider: {fileID: 6243426928943125473}
@@ -445,7 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 039cac675ed83ff46b12db0b7362b4c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  casingPrefab: {fileID: 4133714226769034439, guid: bdf538d348ff934468f6fe03aae6b30a, type: 3}
+  casingPrefab: {fileID: 3209665324766471325, guid: 8e10aa9d9cb247544a1d5e34f9fa68e4, type: 3}
 --- !u!1 &6243426927887921725
 GameObject:
   m_ObjectHideFlags: 0
