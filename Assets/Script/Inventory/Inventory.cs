@@ -44,13 +44,25 @@ public class Inventory : MonoBehaviour
     public XRRayInteractor ryInteractor;
     public XRDirectInteractor drInteractor;
 
+    bool inventoryBool;
     void Awake()
     {
         _inventoryManager = InventoryManager.GetInstance();
-        _inventoryManager.OnItemAddHandler += ItemAdd;
+        
         
         slots = slotParent.GetComponentsInChildren<UISlot>();
     }
+
+    private void OnEnable()
+    {
+        _inventoryManager.OnItemAddHandler += ItemAdd;
+    }
+
+    private void OnDisable()
+    {
+        _inventoryManager.OnItemAddHandler -= ItemAdd;
+    }
+
     private void Start()
     {
         List<InputDevice> devices = new List<InputDevice>();
@@ -72,15 +84,13 @@ public class Inventory : MonoBehaviour
     {
         targetDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out bool secondaryButtonValue);
 
-        if (secondaryButtonValue || Input.GetKeyDown(KeyCode.L))
+        if (secondaryButtonValue&& !inventoryBool)//f (InputManager.GetInstance()._leftController.TryGetFeatureValue(CommonUsages.triggerButton, out bool leftTriggerValue) && leftTriggerValue)
         {
             if (!inventoryActivated)
             {
-                //if (_inventoryManager.is1st != true)
-                //{
-                //    guide.OnTrigger(1);
-                //    _inventoryManager.is1st = true;
-                //}
+                inventoryActivated = true;
+
+                inventoryBool = true;
                 inventoryParent.position = UIPos.position;
                 inventoryParent.rotation = UIRot.rotation;
                 slotParent.gameObject.SetActive(true);
@@ -90,10 +100,10 @@ public class Inventory : MonoBehaviour
 
                 SetItemSlot();
 
-                inventoryActivated = true;
             }
             else
             {
+                inventoryBool = true;
                 slotParent.gameObject.SetActive(false);
                 workroomParent.gameObject.SetActive(false);
                 ryInteractor.gameObject.SetActive(false);
@@ -101,9 +111,20 @@ public class Inventory : MonoBehaviour
                 inventoryActivated = false;
             }
         }
+        else
+        {
+            if (inventoryBool)
+            {
+                Invoke("ssss", 3f);
+            }
+        }
 
     }
+    void ssss()
+    {
+        inventoryBool = false;
 
+    }
     void ResetitemSlot()
     {
         for (int i = 0; i < slots.Length; i++)

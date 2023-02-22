@@ -9,10 +9,12 @@ public class Stage1Scene : MonoBehaviour
 {
     [SerializeField] AudioSource bgm;
     public Image fade;
+    public NextStage nex;
     public PlayerJump pl;
+
     void Start()
     {
-        pl =  GameObject.FindWithTag("Player").GetComponent<PlayerJump>();
+        pl = PlayerManager.GetInstance().player;
         pl.gameObject.transform.position = new Vector3(-7, 2, -62);
         PlayerManager.GetInstance().Newplayer.PlayerHp = 100;
         AudioManager.GetInstance().BgmPlay(bgm, 2);

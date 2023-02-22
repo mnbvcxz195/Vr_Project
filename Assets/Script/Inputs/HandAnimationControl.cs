@@ -10,8 +10,11 @@ public class HandAnimationControl : MonoBehaviour
 
     private void OnEnable()
     {
-        gripAction.action.performed += GripAnimation;
-        pinchAction.action.performed += PinchAnimation;
+        if(gripAction)
+            gripAction.action.performed += GripAnimation;
+
+        if(pinchAction)
+            pinchAction.action.performed += PinchAnimation;
     }
 
     private void PinchAnimation(InputAction.CallbackContext obj)

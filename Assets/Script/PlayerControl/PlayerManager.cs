@@ -42,7 +42,12 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerState Newplayer = new PlayerState(100, true, false);
     [SerializeField] Image demegeImg;
+    public PlayerJump player;
+    void Start()
+    {
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerJump>();
 
+    }
     public void Damage(int demege)
     {
         if (Newplayer.ondamage == true)

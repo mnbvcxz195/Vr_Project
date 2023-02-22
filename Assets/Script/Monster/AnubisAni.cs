@@ -30,13 +30,12 @@ public class AnubisAni : MonoBehaviour
     public float MonAttck = 3f; //몬스터가 공격을할수있는범위
     public bool isDie = false;
     Vector3 vete;
-    Vector3 vetea;
 
 
     void Start()
     {
         camerori = cam.transform.localPosition;
-
+        pla = GameObject.FindWithTag("Player").GetComponent<PlayerJump>().gameObject;
         StartCoroutine(CheckMonState());
         StartCoroutine(MonsterAction());
 
@@ -170,6 +169,7 @@ public class AnubisAni : MonoBehaviour
         {
             AudioManager.GetInstance().MonSfxPlay(monsfx, 5, false);
             MonsterManager.GetInstance().MonsterDie(bgm);
+            MonsterManager.GetInstance().battle = false;
             isDie = true;
             atr.SetBool("IsDie", true);
         }

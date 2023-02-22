@@ -28,14 +28,14 @@ public class UIPlayer : MonoBehaviour
         hpMonster.value = MonsterManager.GetInstance().Newmonster.MonsterHp;
         if (PlayerManager.GetInstance().Newplayer.PlayerHp > 0)
         {
-            hpPlayerfill.gameObject.SetActive(true);
-            PlayerManager.GetInstance().Newplayer.PlayerDie = false;
-            Uidie.gameObject.SetActive(false);
-            if (PlayerManager.GetInstance().Newplayer.PlayerDie == false)
-            {
-                ryInteractor.gameObject.SetActive(false);
-                drInteractor.gameObject.SetActive(true);
-            }
+            //hpPlayerfill.gameObject.SetActive(true);
+            //PlayerManager.GetInstance().Newplayer.PlayerDie = false;
+            //Uidie.gameObject.SetActive(false);
+            //if (PlayerManager.GetInstance().Newplayer.PlayerDie == false)
+            //{
+            //    ryInteractor.gameObject.SetActive(false);
+            //    drInteractor.gameObject.SetActive(true);
+            //}
 
         }
 

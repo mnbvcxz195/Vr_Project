@@ -26,7 +26,7 @@ public class PlayerJump : MonoBehaviour
         Speed = 5.0f;
         Gravity = 1;
         MoveDir = Vector3.zero;
-        JumpPow = 3.0f;
+        JumpPow = 0f;
         JumpButtonPressed = false;
         SelectPlayer = GetComponent<CharacterController>();
 

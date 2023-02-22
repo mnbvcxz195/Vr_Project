@@ -6,14 +6,20 @@ using DG.Tweening;
 
 public class NextStage : MonoBehaviour
 {
-    [SerializeField] GameObject pl;
-    public Image fade;
+    [SerializeField] PlayerJump pl;
+    [SerializeField] GameObject plgo;
 
+    public Image fade;
+    private void Start()
+    {
+        pl = GameObject.FindWithTag("Player").GetComponent<PlayerJump>();
+        plgo = pl.gameObject;
+    }
     void Update()
     {
         NextStage2();
     }
-    void NextStage2()
+     void NextStage2()
     {
         float aaa = Vector3.Distance(pl.transform.position, transform.position);
         if(aaa < 2)
@@ -30,5 +36,4 @@ public class NextStage : MonoBehaviour
     {
         fade.DOFade(1, 2f).SetDelay(1f);
     }
-
 }
