@@ -21,21 +21,22 @@ public class GameManager : MonoBehaviour
 
     }
     #endregion
+
     public PlayerState Newplayer = new PlayerState(100, true);
 
     public void Damege(int demege)
     {
-        if (Newplayer.ondamege == true)
+        if (Newplayer.ondamage == true)
         {
-            Newplayer.ondamege = false;
-            Newplayer.Hp -= demege;
+            Newplayer.ondamage = false;
+            Newplayer.PlayerHp -= demege;
             Invoke("Damegedelay", 1f);
         }
         else return;
     }
     void Damegedelay()
     {
-        Newplayer.ondamege = true;
+        Newplayer.ondamage = true;
 
     }
 

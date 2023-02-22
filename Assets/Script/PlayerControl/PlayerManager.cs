@@ -5,12 +5,12 @@ using DG.Tweening;
 using UnityEngine.UI;
 
 
-public class PlayerStatetest
+public class PlayerState
 {
     public int PlayerHp;
     public bool ondamage;
 
-    public PlayerStatetest(int hp, bool damagedelay)
+    public PlayerState(int hp, bool damagedelay)
     {
         PlayerHp = hp;
         ondamage = damagedelay;
@@ -38,7 +38,7 @@ public class PlayerManager : MonoBehaviour
     }
     #endregion
 
-    public PlayerStatetest Newplayer = new PlayerStatetest(100, true);
+    public PlayerState Newplayer = new PlayerState(100, true);
     [SerializeField] Image demegeImg;
 
     public void Damage(int demege)
