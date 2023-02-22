@@ -87,6 +87,9 @@ public class Inventory : MonoBehaviour
                 workroomParent.gameObject.SetActive(true);
                 drInteractor.gameObject.SetActive(false);
                 ryInteractor.gameObject.SetActive(true);
+
+                SetItemSlot();
+
                 inventoryActivated = true;
             }
             else
@@ -99,6 +102,23 @@ public class Inventory : MonoBehaviour
             }
         }
 
+    }
+
+    void ResetitemSlot()
+    {
+        for (int i = 0; i < slots.Length; i++)
+            slots[i].ClearSlot();
+    }
+
+    void SetItemSlot()
+    {
+        ResetitemSlot();
+
+        foreach (var itemList in _inventoryManager.Items.Values)
+        {
+            foreach (var curItem in itemList.Values)
+                ItemAdd(curItem);
+        }        
     }
 
     void ItemAdd(Item item)
@@ -149,5 +169,10 @@ public class Inventory : MonoBehaviour
     public void SpendSelectItem(int idx, int count)
     {
         slots[idx].SetItemCount(count);
+    }
+
+    public void SetMyItems(Item item)
+    {
+        
     }
 }
