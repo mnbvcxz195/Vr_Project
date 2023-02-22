@@ -18,10 +18,12 @@ public class Gun : MonoBehaviour
 
     [Header("Target hit graphic")]
     [SerializeField] GameObject hitGraphic;
+    private HitGraphicMemoryPool hitGraphicMemoryPool;
 
     [Header("Gun Shot graphic")]
-    [SerializeField] GameObject gunShotGraphic;
+    //[SerializeField] GameObject gunShotGraphic;
     [SerializeField] Transform gunShotPos;
+    private GunShotGraphicMemoryPool gunShotGraphicMemoryPool;
 
     [Header("Spawn Points")]
     [SerializeField] private Transform casingSpawnPoint;        //藕乔 积己 困摹
@@ -32,9 +34,13 @@ public class Gun : MonoBehaviour
 
     private CasingMemoryPool casingMemoryPool; //藕乔 积己 饶 劝己/厚劝己 包府
 
+    private bool delay;
+
     private void Awake()
     {
         casingMemoryPool = GetComponent<CasingMemoryPool>();
+        gunShotGraphicMemoryPool = GetComponent<GunShotGraphicMemoryPool>();
+        hitGraphicMemoryPool = GetComponent<HitGraphicMemoryPool>();
 
         if (TryGetComponent(out AudioSource audio))
         {
@@ -52,16 +58,24 @@ public class Gun : MonoBehaviour
 
     private void TriggerPulled(ActivateEventArgs arg0)
     {
-        arg0.interactor.GetComponent<XRBaseController>().SendHapticImpulse(0.5f, 0.25f);
+        if (!delay)
+        {
+            delay = true;
 
-        gunAudioSource.PlayOneShot(gunClipSFX);
+            arg0.interactor.GetComponent<XRBaseController>().SendHapticImpulse(0.5f, 0.25f);
 
-        CreateGunShotGraphic(gunShotPos.position);
+            gunAudioSource.PlayOneShot(gunClipSFX);
 
-        FireRaycastIntoScene();
+            CreateGunShotGraphic(gunShotPos);
 
-        //藕乔 积己
-        casingMemoryPool.SpawnCasing(casingSpawnPoint, transform.right);
+            FireRaycastIntoScene();
+
+            //藕乔 积己
+            casingMemoryPool.SpawnCasing(casingSpawnPoint, transform.right);
+
+            Invoke("ShotDelay", 1);
+        }
+        
     }
 
     private void FireRaycastIntoScene()
@@ -86,12 +100,15 @@ public class Gun : MonoBehaviour
 
     private void CreateHitGraphicOnTarget(Vector3 hitLocation)
     {
-        GameObject hitMarker = Instantiate(hitGraphic, hitLocation, Quaternion.identity);
+        //GameObject hitMarker = Instantiate(hitGraphic, hitLocation, Quaternion.identity);
+        hitGraphicMemoryPool.SpawnHitGraphic(hitLocation);
     }
-    private void CreateGunShotGraphic(Vector3 shotLocation)
+    private void CreateGunShotGraphic(Transform shotLocation)
     {
-        GameObject shotMarker = Instantiate(gunShotGraphic, shotLocation, Quaternion.identity);
-        shotMarker.transform.rotation = this.gameObject.transform.rotation;
+        var rot = transform.rotation;
+        gunShotGraphicMemoryPool.SpawnGunShotGraphic(shotLocation, rot);
+        //GameObject shotMarker = Instantiate(gunShotGraphic, shotLocation, Quaternion.identity);
+        //shotMarker.transform.rotation = this.gameObject.transform.rotation;
     }
 
     public void IsTriggerOn()
@@ -104,5 +121,10 @@ public class Gun : MonoBehaviour
     {
         handleColider.GetComponentInChildren<BoxCollider>().isTrigger = false;
         gunBodyColider.GetComponentInChildren<BoxCollider>().isTrigger = false;
+    }
+
+    public void ShotDelay()
+    {
+        delay = false;
     }
 }
