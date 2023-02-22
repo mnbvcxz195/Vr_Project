@@ -20,11 +20,6 @@ public class UITitle : MonoBehaviour
 
     }
 
-    void Update()
-    {
-        
-    }
-
     void gameStorynext()
     {
         switch (storyCount)

@@ -9,5 +9,4 @@ public class Stage1Scene : MonoBehaviour
     {
         AudioManager.GetInstance().BgmPlay(bgm, 2);
     }
-
 }

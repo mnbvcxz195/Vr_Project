@@ -18,6 +18,5 @@ public class UIDie : MonoBehaviour
     void SceneReLoad()
     {
         ScenesManager.GetInstance().SceneReLoad();
-        Debug.Log("11");
     }
 }

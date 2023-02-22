@@ -45,12 +45,21 @@ public class ScenesManager : MonoBehaviour
         currentScene = scene;
         SceneManager.LoadScene(scene.ToString());
     }
+    public void ChangeSceneint(int aa)
+    {
+
+        UIManager.GetInstance().ClearList();
+        ObjectManager.GetInstance().ClearList();
+
+        SceneManager.LoadScene(aa);
+    }
 
     #endregion
 
     public void SceneReLoad()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        ChangeSceneint(SceneManager.GetActiveScene().buildIndex);
+
     }
 
 }

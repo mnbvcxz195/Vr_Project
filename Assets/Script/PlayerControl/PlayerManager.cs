@@ -9,12 +9,14 @@ public class PlayerState
 {
     public int PlayerHp;
     public bool ondamage;
+    public bool PlayerDie;
 
-    public PlayerState(int hp, bool damagedelay)
+
+    public PlayerState(int hp, bool damagedelay,bool playerDie)
     {
         PlayerHp = hp;
         ondamage = damagedelay;
-
+        PlayerDie = playerDie;
     }
 }
 
@@ -38,7 +40,7 @@ public class PlayerManager : MonoBehaviour
     }
     #endregion
 
-    public PlayerState Newplayer = new PlayerState(100, true);
+    public PlayerState Newplayer = new PlayerState(100, true, false);
     [SerializeField] Image demegeImg;
 
     public void Damage(int demege)

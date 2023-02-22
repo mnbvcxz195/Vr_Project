@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public PlayerState Newplayer = new PlayerState(100, true);
+    public PlayerState Newplayer = new PlayerState(100, true,false);
 
     public void Damege(int demege)
     {
