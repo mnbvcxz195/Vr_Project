@@ -11,6 +11,7 @@ public class AnubisAni : MonoBehaviour
 
 
 
+
     Vector3 camerori;
     public enum State // 몬스터의 상태
     { 
@@ -22,7 +23,7 @@ public class AnubisAni : MonoBehaviour
     Attck2,
     }
     public State state = State.Idle;
-    [SerializeField] Animator atr;
+    [SerializeField] public Animator atr;
     [SerializeField] GameObject pla;
 
     public float speed = 1;
@@ -35,7 +36,6 @@ public class AnubisAni : MonoBehaviour
     void Start()
     {
         camerori = cam.transform.localPosition;
-        pla = GameObject.FindWithTag("Player").GetComponent<PlayerJump>().gameObject;
         StartCoroutine(CheckMonState());
         StartCoroutine(MonsterAction());
 
@@ -49,9 +49,9 @@ public class AnubisAni : MonoBehaviour
             case State.Jump:
                 if (atr.GetCurrentAnimatorStateInfo(0).IsName("jump"))
                 {
-                    MonsterMove(speed*6);
+                    MonsterMove(speed*5);
                 }
-                MonsterMove(speed*2);
+                MonsterMove(speed*3f);
                 break;
         }
     }
@@ -59,11 +59,6 @@ public class AnubisAni : MonoBehaviour
     {
         while(!isDie)
         {
-           if(MonsterManager.GetInstance().battle == true)
-            {
-                atr.SetBool("IsBattle", true);
-
-            }
             yield return new WaitForSeconds(0.3f);
             for (int i = 0; i < 3; i++)
             {
@@ -168,6 +163,7 @@ public class AnubisAni : MonoBehaviour
         if(MonsterManager.GetInstance().Newmonster.MonsterHp <= 0)
         {
             AudioManager.GetInstance().MonSfxPlay(monsfx, 5, false);
+            AudioManager.GetInstance().SfxPlay(monweaponsfx, 5);
             MonsterManager.GetInstance().MonsterDie(bgm);
             MonsterManager.GetInstance().battle = false;
             isDie = true;

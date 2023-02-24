@@ -34,8 +34,13 @@ public class MonsterManager : MonoBehaviour
 
     }
     #endregion
+
     public bool battle = false;
-    public Anubis Newmonster = new Anubis(100,true);
+    public Anubis Newmonster = new Anubis(100, true);
+    private void Start()
+    {
+        Newmonster = new Anubis(100, true);
+    }
     public void MonsterDamage(int demege)
     {
         if (Newmonster.ondamage == true)
@@ -58,6 +63,6 @@ public class MonsterManager : MonoBehaviour
 
     public void MonsterDie(AudioSource oo)
     {
-        AudioManager.GetInstance().BgmPlay(oo, 6);
+        AudioManager.GetInstance().BgmPlay(oo, 1);
     }
 }

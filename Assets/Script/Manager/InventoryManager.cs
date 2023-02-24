@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
-using static UnityEditor.Progress;
 
 [Serializable]
 public class Serialization<TKey, Tvalue> : ISerializationCallbackReceiver

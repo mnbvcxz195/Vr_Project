@@ -26,19 +26,15 @@ public class UIPlayer : MonoBehaviour
     {
         hpPlayer.value = PlayerManager.GetInstance().Newplayer.PlayerHp;
         hpMonster.value = MonsterManager.GetInstance().Newmonster.MonsterHp;
+        hpMonster.gameObject.SetActive(false);
         if (PlayerManager.GetInstance().Newplayer.PlayerHp > 0)
         {
-            //hpPlayerfill.gameObject.SetActive(true);
-            //PlayerManager.GetInstance().Newplayer.PlayerDie = false;
-            //Uidie.gameObject.SetActive(false);
-            //if (PlayerManager.GetInstance().Newplayer.PlayerDie == false)
-            //{
-            //    ryInteractor.gameObject.SetActive(false);
-            //    drInteractor.gameObject.SetActive(true);
-            //}
-
+            hpPlayerfill.gameObject.SetActive(true);
+            hpMonster.gameObject.SetActive(false);
+            PlayerManager.GetInstance().Newplayer.PlayerDie = false;
+            Uidie.gameObject.SetActive(false);
         }
-
+    }
         void Update()
         {
             RefreshHP();
@@ -47,7 +43,14 @@ public class UIPlayer : MonoBehaviour
         void RefreshHP()
         {
             hpPlayer.value = PlayerManager.GetInstance().Newplayer.PlayerHp;
+            Debug.Log("ÇÃ·¹ÀÌ¾î ¹ë·ù ³Ñ¾î¿È");
             hpMonster.value = MonsterManager.GetInstance().Newmonster.MonsterHp;
+            Debug.Log("¸ó½ºÅÍ ¹ë·ù ³Ñ¾î¿È");
+
+            if (MonsterManager.GetInstance().battle == true)
+            {
+                hpMonster.gameObject.SetActive(true);
+            }
             if (PlayerManager.GetInstance().Newplayer.PlayerHp <= 0)
             {
                 hpPlayerfill.gameObject.SetActive(false);
@@ -59,10 +62,6 @@ public class UIPlayer : MonoBehaviour
                     drInteractor.gameObject.SetActive(false);
                 }
             }
-            if (hpMonster.value <= 0)
-            {
-                hpPlayerfill.gameObject.SetActive(false);
-            }
 
         }
         void hpMonsterHideOn()
@@ -70,6 +69,6 @@ public class UIPlayer : MonoBehaviour
             GameObject go = hpMonster.gameObject;
             MonsterManager.GetInstance().MonsterHpBar(go);
         }
-    }
+    
 }
 

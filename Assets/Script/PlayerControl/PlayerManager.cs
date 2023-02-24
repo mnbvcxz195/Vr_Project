@@ -46,7 +46,7 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerJump>();
-
+        Newplayer = new PlayerState(100, true, false);
     }
     public void Damage(int demege)
     {
