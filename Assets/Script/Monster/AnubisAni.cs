@@ -8,10 +8,6 @@ public class AnubisAni : MonoBehaviour
     [SerializeField] AudioSource monsfx;
     [SerializeField] AudioSource monweaponsfx;
     [SerializeField] AudioSource bgm;
-
-
-
-
     Vector3 camerori;
     public enum State // 몬스터의 상태
     { 
@@ -162,12 +158,18 @@ public class AnubisAni : MonoBehaviour
     {
         if(MonsterManager.GetInstance().Newmonster.MonsterHp <= 0)
         {
-            AudioManager.GetInstance().MonSfxPlay(monsfx, 5, false);
-            AudioManager.GetInstance().SfxPlay(monweaponsfx, 5);
-            MonsterManager.GetInstance().MonsterDie(bgm);
-            MonsterManager.GetInstance().battle = false;
-            isDie = true;
-            atr.SetBool("IsDie", true);
+            if (MonsterManager.GetInstance().battle == true)
+            {
+                MonsterManager.GetInstance().battle = false;
+                AudioManager.GetInstance().MonSfxPlay(monsfx, 5, false);
+                AudioManager.GetInstance().SfxPlay(monweaponsfx, 5);
+                MonsterManager.GetInstance().MonsterDie(bgm);
+                MonsterManager.GetInstance().battle = false;
+                isDie = true;
+                atr.SetBool("IsDie", true);
+            }
+            else
+                return;
         }
     }
 }

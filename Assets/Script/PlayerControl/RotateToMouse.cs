@@ -48,7 +48,7 @@ public class RotateToMouse : MonoBehaviour
         if(MonsterManager.GetInstance().Newmonster.MonsterHp > 0)
         {
             float sss = Vector3.Distance(go.transform.position, gameObject.transform.position);
-            //Debug.Log($"P{sss}");
+            Debug.Log($"P{sss}");
             if (sss < 0.8f)
             {
                 PlayerManager.GetInstance().Damage(40);

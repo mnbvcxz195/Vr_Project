@@ -63,6 +63,6 @@ public class MonsterManager : MonoBehaviour
 
     public void MonsterDie(AudioSource oo)
     {
-        AudioManager.GetInstance().BgmPlay(oo, 1);
+        AudioManager.GetInstance().BgmPlay(oo, 2);
     }
 }

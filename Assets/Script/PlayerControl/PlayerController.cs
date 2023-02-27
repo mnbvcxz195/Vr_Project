@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
         UpdateRotate();
         UpdateMove();
         UpdateJump();
-        monte();
         //UpdateWeaponAction();
     }
 
@@ -98,15 +97,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(keyCodeReload))
         {
             weapon.StartReload();
-        }
-    }
-    void monte()
-    {
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            MonsterManager.GetInstance().battle = true;
-            MonsterManager.GetInstance().Newmonster.MonsterHp -= 10;
-            Debug.Log($"{MonsterManager.GetInstance().Newmonster.MonsterHp}");
         }
     }
 }

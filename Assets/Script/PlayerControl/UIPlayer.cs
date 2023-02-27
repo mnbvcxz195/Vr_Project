@@ -27,13 +27,11 @@ public class UIPlayer : MonoBehaviour
         hpPlayer.value = PlayerManager.GetInstance().Newplayer.PlayerHp;
         hpMonster.value = MonsterManager.GetInstance().Newmonster.MonsterHp;
         hpMonster.gameObject.SetActive(false);
-        if (PlayerManager.GetInstance().Newplayer.PlayerHp > 0)
-        {
-            hpPlayerfill.gameObject.SetActive(true);
-            hpMonster.gameObject.SetActive(false);
-            PlayerManager.GetInstance().Newplayer.PlayerDie = false;
-            Uidie.gameObject.SetActive(false);
-        }
+        hpPlayerfill.gameObject.SetActive(true);
+        hpMonster.gameObject.SetActive(false);
+        PlayerManager.GetInstance().Newplayer.PlayerDie = false;
+        Uidie.gameObject.SetActive(false);
+
     }
         void Update()
         {
@@ -56,12 +54,17 @@ public class UIPlayer : MonoBehaviour
                 hpPlayerfill.gameObject.SetActive(false);
                 PlayerManager.GetInstance().Newplayer.PlayerDie = true;
                 Uidie.gameObject.SetActive(true);
+            MonsterManager.GetInstance().battle = false;
                 if (PlayerManager.GetInstance().Newplayer.PlayerDie == true)
                 {
                     ryInteractor.gameObject.SetActive(true);
                     drInteractor.gameObject.SetActive(false);
                 }
             }
+            if(MonsterManager.GetInstance().battle == false)
+        {
+            hpMonster.gameObject.SetActive(false);
+        }
 
         }
         void hpMonsterHideOn()

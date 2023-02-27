@@ -45,7 +45,6 @@ public class PlayerJump : MonoBehaviour
     private void Update()
     {
         Jump();
-        monte();
         MonsterAttckCheck();
     }
 
@@ -92,15 +91,6 @@ public class PlayerJump : MonoBehaviour
         // 실제 캐릭터의 이동은 여기서 담당합니다.
         SelectPlayer.Move(MoveDir * Time.deltaTime);
 
-    }
-    void monte()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            MonsterManager.GetInstance().battle = true;
-            MonsterManager.GetInstance().Newmonster.MonsterHp -= 10;
-            Debug.Log($"{MonsterManager.GetInstance().Newmonster.MonsterHp}");
-        }
     }
     void MonsterAttckCheck()
     {

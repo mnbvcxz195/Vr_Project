@@ -54,7 +54,7 @@ public class Treasure : MonoBehaviour
     }
     public void GrapTreasure()
     {
-        MonsterManager.GetInstance().battle = true;
+        MonsterManager.GetInstance().battle = false;
         AudioManager.GetInstance().BgmPlay(Bgm, 3);
         Debug.Log($"{MonsterManager.GetInstance().Newmonster.MonsterHp}");
         gameObject.SetActive(false);
